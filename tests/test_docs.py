@@ -30,8 +30,11 @@ def test_dockerfile_cmd():
     assert "python:3.11-slim" in dockerfile and "app.main:app" in dockerfile
 
 
-def test_feedback_exists():
-    assert "Token Factory" in Path("FEEDBACK.md").read_text(encoding="utf-8")
+def test_readme_documents_models_and_deploy():
+    readme = Path("README.md").read_text(encoding="utf-8")
+    assert "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B" in readme and "nvidia/nemotron-3-super-120b-a12b" in readme
+    assert "## Deploy" in readme and "TRUST_PROXY=true" in readme and "CODE_GUIDE.md" in readme
+    assert "TODO (run" not in readme
 
 
 def test_readme_lists_policy_sources():

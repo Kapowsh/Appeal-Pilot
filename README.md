@@ -2,15 +2,26 @@
 
 > **Synthetic data only · Drafting aid, not medical advice · Clinician sign-off required before use**
 
+Drafts prior-authorization appeal letters in which every factual sentence cites the patient's chart, then fact-checks itself before a clinician signs off. Built on **NVIDIA Nemotron** models served by **Nebius Token Factory**.
+
 Entry for the Nebius x NVIDIA Global AI Hackathon, Best Apps and Agents track.
+
+- **Live demo:** (deployment URL coming soon; no login needed)
+- **Code walkthrough:** [CODE_GUIDE.md](CODE_GUIDE.md) explains every file and function
 
 ## What it is
 
-Appeal-Pilot reads a prior-authorization denial letter and the patient's chart notes. It matches chart evidence to the payer's coverage criteria, drafts an appeal letter in which every factual sentence cites a chart line, fact-checks the draft, and waits for a clinician to approve it.
+When an insurer denies a prior-authorization request, someone has to write an appeal. They read the denial, find the payer's coverage criteria, dig through the chart for evidence, and argue the case. That costs clinicians and staff hours, and a letter that misstates the chart is worse than no letter.
 
-The problem: prior-authorization appeals eat clinician and staff time, and a letter that misstates the chart is worse than no letter. Appeal-Pilot makes each claim traceable to a numbered chart line and flags any claim it can't support.
+Appeal-Pilot does the legwork and keeps every claim traceable:
 
-Nothing is ever sent. Approving only marks the letter final and enables the download.
+1. **Upload** a denial letter and chart notes (PDF or text), or pick one of the 10 sample cases.
+2. **Watch it work.** A live step tracker shows each agent as it runs: it reads the denial, retrieves the matching policy, checks each coverage criterion against the chart, drafts the letter and fact-checks it.
+3. **See the evidence.** Each criterion is marked *met*, *not met* or *unclear*. Click one to highlight the chart lines that prove it. Hover a sentence of the letter to see what it cites.
+4. **Review the flags.** Sentences the fact-checker can't verify are flagged. Choose **Keep** or **Remove** for each, and edit any sentence in place.
+5. **Approve and download.** Approval is blocked until every flag is resolved. Nothing is ever sent: approving only marks the letter final and enables the `.txt` / `.md` download.
+
+When the chart doesn't support a criterion, the letter doesn't pretend it does. It requests a peer-to-peer review for that criterion instead.
 
 ## Architecture
 
@@ -28,42 +39,48 @@ flowchart LR
     T[(Tavily, optional)] -.->|display only| PO
 ```
 
-- **Preprocess:** `app/tools/pdf.py` extracts text and splits the chart into numbered lines. The letter can cite only these IDs.
-- **Intake:** `app/agents/intake.py` turns the denial into a structured `Denial`.
-- **Policy:** `app/agents/policy.py` queries the policy index (`app/retrieval.py`, top k = 4) with payer + service + denial reason, then extracts the numbered criteria, each tied to its policy ID and section.
-- **Matcher:** `app/agents/matcher.py` marks each criterion met, not met or unclear, citing chart line IDs. IDs that aren't in the chart are dropped, and a "met" with no valid evidence is downgraded to "unclear".
-- **Writer:** `app/agents/writer.py` argues only from met criteria, and asks for peer-to-peer review for the rest.
-- **Reviewer:** `app/agents/reviewer.py` sees only the letter, the chart lines and the criteria, never the writer's reasoning, and flags unsupported sentences.
-- **Deterministic checks:** `app/checks.py` flags cited IDs that don't exist, factual sentences with no citation, and numbers or dates missing from the cited lines.
-- **Streaming:** `app/pipeline.py` streams each step to the browser over Server-Sent Events.
+| Step | File | What it does |
+|---|---|---|
+| Preprocess | `app/tools/pdf.py` | Extracts text and numbers the chart `L1…Ln`. The letter can cite only these IDs |
+| Intake | `app/agents/intake.py` | Turns the denial into structured fields: payer, service, codes, reason, dates |
+| Policy | `app/agents/policy.py`, `app/retrieval.py` | Retrieves the payer's policy (the one the denial cites, if it names one) and extracts its numbered criteria. Never mixes policies or payers |
+| Matcher | `app/agents/matcher.py` | Marks each criterion met / not met / unclear with evidence lines. A "met" with no valid evidence is downgraded to "unclear" |
+| Writer | `app/agents/writer.py` | Argues only from met criteria; every factual sentence carries citations |
+| Reviewer | `app/agents/reviewer.py` | An independent fact-check. It sees only the letter and the sources, never the writer's reasoning |
+| Checks | `app/checks.py` | Rule-based, no LLM: flags unknown citations, uncited facts, and numbers or dates absent from the cited sources |
+
+Progress streams to the browser over Server-Sent Events (`app/pipeline.py`, `app/main.py`). The UI is a single dependency-free page (`static/index.html`).
 
 ## How Nebius and NVIDIA are used
 
-- **Endpoint.** Every LLM call goes through `app/llm.py`, which uses the `openai` SDK pointed at **Nebius Token Factory**: `https://api.tokenfactory.nebius.com/v1/`. No other model provider is used.
-- **Models.** All chat steps use **NVIDIA Nemotron** models. Their IDs come only from `.env`, as found by `scripts/discover_models.py`:
+- **One endpoint.** Every LLM call goes through `app/llm.py`, which uses the `openai` SDK pointed at **Nebius Token Factory** (`https://api.tokenfactory.nebius.com/v1/`). No other model provider is used.
+- **Nemotron for every chat step**, tiered by difficulty:
 
-  | Step | Env var | Model ID |
+  | Steps | Env var | Model |
   |---|---|---|
-  | Intake, policy parsing | `MODEL_FAST` | TODO (run `scripts/discover_models.py`), a Nemotron Nano / Lightning model |
-  | Matcher, writer, reviewer | `MODEL_REASON` | TODO (run `scripts/discover_models.py`), Nemotron 3 Super |
-  | Policy embeddings | `MODEL_EMBED` | TODO (run `scripts/discover_models.py`). Empty means the BM25 fallback |
+  | Intake, policy parsing | `MODEL_FAST` | `nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B` |
+  | Matcher, writer, reviewer | `MODEL_REASON` | `nvidia/nemotron-3-super-120b-a12b` |
+  | Policy search embeddings | `MODEL_EMBED` | `Qwen/Qwen3-Embedding-8B` (optional; leave empty to use BM25 keyword search) |
 
-- **Structured outputs.** Every call requests `response_format: json_schema`, generated from the Pydantic model. If the model rejects that, the client falls back to `json_object` with the schema in the prompt. Replies are validated with Pydantic and retried once, with the validation error fed back to the model. `<think>` blocks and code fences are stripped first. Transport errors (429/5xx) are retried with exponential backoff and jitter, up to 4 attempts. Calls use a 60 s timeout, temperature 0.1 and explicit `max_tokens`.
-- **Why the models are tiered.** Extraction and criteria parsing copy fields out of short documents, so a small fast Nemotron handles them cheaply. Matching evidence to criteria, writing a careful argument, and catching unsupported claims need the stronger reasoning model. The reviewer runs on the same model in a fresh context, so it judges the letter without the writer's framing.
-- **Usage shown in the UI.** Per-call model, latency and token usage are recorded on the case and shown in the page footer.
+  Extraction copies fields out of short documents, so the small, fast Nano model handles it cheaply. Matching evidence, writing a careful argument and catching unsupported claims need the stronger Super model. The reviewer runs on that same model in a fresh context, so it judges the letter without the writer's framing.
+- **Model discovery.** `scripts/discover_models.py` lists the models your key can use and probes each Nemotron model for `json_schema`, `json_object` and tool calling. On our account, Nemotron 3 Nano 30B, Nemotron 3 Super 120B, Nemotron Ultra 550B and Nemotron 3.5 Super VL passed all three probes. The Nemotron Lightning model failed both JSON modes, so it isn't used.
+- **Structured outputs.** Every call requests `response_format: json_schema`, generated from a Pydantic model. If a model rejects that, the client falls back to `json_object` with the schema in the prompt. Replies are validated with Pydantic, and one retry feeds the validation error back to the model. `<think>` blocks and code fences are stripped first. 429 and 5xx errors are retried with exponential backoff and jitter, up to 4 attempts. Calls use a 60 s timeout, temperature 0.1 and explicit `max_tokens`.
+- **Usage in the UI.** The page footer shows each call's model, latency and token count.
 
 ## Eval results
 
-`eval/run_eval.py` runs the full pipeline on the 10 bundled cases: 7 where the chart fully supports the appeal, 2 with a genuinely missing criterion, and 1 where the chart contradicts a criterion. It measures:
+`eval/run_eval.py` runs the full pipeline on the 10 bundled cases: 7 where the chart supports the appeal, 2 with a missing criterion, and 1 where the chart contradicts a criterion. It scores each case against its `expected.json` answer key:
 
-- **Extraction:** denial fields matched, using normalized exact match. `service` and `denial_reason` are scored by token overlap.
-- **Status acc:** criterion status accuracy against `expected.json`.
-- **Evidence precision:** the share of cited chart lines that appear in the expected evidence.
-- **Citation validity:** the share of factual sentences that pass the deterministic checks.
-- **Catch rate:** two fabricated sentences (an impossible date and a symptom absent from the chart) are injected into each draft. The reviewer and checks are re-run, and the rate is the share they flag.
-- Latency and tokens per case.
+| Metric | Meaning |
+|---|---|
+| Extraction | Denial fields extracted correctly (dates in any format; free text by word overlap) |
+| Status acc | Criteria given the right met / not met / unclear verdict |
+| Evidence precision | Cited chart lines that appear in the answer key |
+| Citation validity | Factual sentences that pass the rule-based checks |
+| Catch rate | Two fabricated sentences (an impossible date and a symptom absent from the chart) are injected into each letter; the share the reviewer and checks flag |
+| Latency, tokens | Per case |
 
-TODO: run `uv run python eval/run_eval.py` with Token Factory credentials, then paste `eval/results.md` here.
+Run it with `uv run python eval/run_eval.py`; results are written to `eval/results.md`. It makes about 50 Token Factory calls, so it uses credits. Live results will be added here.
 
 ## Policy sources
 
@@ -97,18 +114,51 @@ The 10 sample denials are synthetic, but they follow the patterns in real, de-id
 
 ## Setup
 
-1. Install [uv](https://docs.astral.sh/uv/), then run `uv sync`. This uses Python 3.11.
-2. `cp .env.example .env` and set `NEBIUS_API_KEY`.
-3. Discover models: `uv run python scripts/discover_models.py`. Copy the recommended `MODEL_FAST`, `MODEL_REASON` and `MODEL_EMBED` lines into `.env`.
-4. Run locally: `uv run uvicorn app.main:app --port 8080`, then open http://localhost:8080. Choose a sample case or upload a denial and chart (PDF or `.txt`; demo PDFs are in `data/cases/case_01..03`).
-5. Run the eval: `uv run python eval/run_eval.py`. Results are written to `eval/results.md`.
-6. Run the tests: `uv run pytest -q`. The tests never call the network; the LLM is mocked.
-7. Docker: `docker build -t appeal-pilot .`, then `docker run -p 8080:8080 --env-file .env appeal-pilot`.
-8. Regenerate the demo PDFs: `uv run python scripts/make_pdfs.py`.
+You need [uv](https://docs.astral.sh/uv/) and a Nebius Token Factory API key.
 
-Runs are rate-limited per IP (`MAX_RUNS_PER_IP_PER_HOUR`, default 10) to protect credits on the public demo. Behind a reverse proxy, set `TRUST_PROXY=true` so the limit uses the proxy-appended client IP; otherwise `X-Forwarded-For` is ignored. The demo needs no login. Tavily search is optional and off by default (`ENABLE_TAVILY=false`). Its results are shown as external references only and are never used for matching.
+```bash
+git clone https://github.com/Kapowsh/Appeal-Pilot.git && cd Appeal-Pilot
+uv sync                                   # installs Python 3.11 and the dependencies
+cp .env.example .env                      # then set NEBIUS_API_KEY and the MODEL_* values
+uv run uvicorn app.main:app --port 8080   # open http://localhost:8080
+```
 
-Hosted demo: TODO (deployment URL).
+- Not sure which models your key can use? Run `uv run python scripts/discover_models.py` and copy the recommended `MODEL_*` lines into `.env`.
+- Upload a denial and chart as PDF or `.txt`, or pick a sample. Demo PDFs are in `data/cases/case_01..03`.
+- Run the tests: `uv run pytest -q`. They never touch the network; the LLM is mocked.
+- Regenerate the demo PDFs: `uv run python scripts/make_pdfs.py`.
+
+### Settings (`.env`)
+
+| Variable | Default | Purpose |
+|---|---|---|
+| `NEBIUS_API_KEY` | (required) | Token Factory key |
+| `MODEL_FAST`, `MODEL_REASON` | (required) | Nemotron model IDs (see the table above) |
+| `MODEL_EMBED` | empty | Embeddings model; empty uses BM25 keyword search |
+| `MAX_RUNS_PER_IP_PER_HOUR` | `10` | Per-visitor rate limit, to protect credits on the public demo |
+| `TRUST_PROXY` | `false` | Set `true` behind a reverse proxy, so the rate limit sees real visitor IPs |
+| `ENABLE_TAVILY`, `TAVILY_API_KEY` | off | Optional web search, shown as "external references" only and never used as evidence |
+
+## Deploy
+
+The app ships as a Docker image (`Dockerfile`: Python 3.11 slim, uvicorn on port 8080). Run exactly **one instance**: cases are held in memory, and a restart clears runs in progress.
+
+**Render (what the demo uses):**
+1. On render.com, choose **New → Web Service**, select this repo, and pick the **Docker** runtime on branch `main`.
+2. Set the health check path to `/healthz`.
+3. Add the environment variables `NEBIUS_API_KEY`, `MODEL_FAST`, `MODEL_REASON`, `MODEL_EMBED`, `TRUST_PROXY=true` and `PORT=8080`.
+4. Deploy. Every push to `main` redeploys.
+
+On Render's free plan the app sleeps after about 15 idle minutes, so the first visit after that takes around 30 seconds.
+
+**Any Docker host (e.g. a Nebius AI Cloud VM):**
+```bash
+docker build -t appeal-pilot .
+docker run -d --restart unless-stopped -p 80:8080 --env-file .env appeal-pilot
+```
+Add `TRUST_PROXY=true` to `.env` if a reverse proxy sits in front of the app.
+
+The demo needs no login. Keep your API key in the host's environment variables, never in the repo.
 
 ## Disclaimer
 
