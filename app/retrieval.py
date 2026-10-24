@@ -113,16 +113,22 @@ class PolicyIndex:
             np.save(path, vectors)
         return vectors
 
-    def search(self, query: str, k: int = 4, payer: str | None = None) -> list[Chunk]:
+    def search(self, query: str, k: int = 4, payer: str | None = None, policy_id: str | None = None) -> list[Chunk]:
+        """Top-k chunks. A payer that matches no policy returns [] rather than another payer's criteria."""
         candidates = list(range(len(self.chunks)))
         if payer:
-            same = [i for i in candidates if self.chunks[i].payer.lower() == payer.strip().lower()]
-            candidates = same or candidates
+            candidates = [i for i in candidates if _payer_matches(payer, self.chunks[i].payer)]
+        if policy_id:
+            cited = [i for i in candidates if self.chunks[i].source_doc == policy_id.upper()]
+            candidates = cited or candidates
+        if not candidates:
+            return []
         if self.mode == "embeddings":
             q = _normalize(np.asarray(self.embedder([query]), dtype=np.float32))[0]
             scores = self._vectors @ q
         else:
             scores = self._bm25.get_scores(_tokens(query))
+            candidates = [i for i in candidates if scores[i] > 0]  # no shared terms -> not a match
         ranked = sorted(candidates, key=lambda i: scores[i], reverse=True)
         return [self.chunks[i] for i in ranked[:k]]
 
@@ -133,6 +139,12 @@ class PolicyIndex:
             embedder = lambda texts: llm.embed(settings.model_embed, texts)  # noqa: E731
         return cls(load_chunks(settings.data_dir / "policies"), embedder=embedder,
                    cache_dir=settings.cache_dir, cache_key=settings.model_embed)
+
+
+def _payer_matches(query: str, payer: str) -> bool:
+    # Tolerates suffixes the intake model may add ("Acme Health Plan", "Northwind Care, Inc.").
+    q, p = " ".join(_tokens(query)), " ".join(_tokens(payer))
+    return bool(q) and (q == p or q.startswith(p + " ") or p.startswith(q + " "))
 
 
 def _normalize(m: np.ndarray) -> np.ndarray:

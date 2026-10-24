@@ -15,6 +15,7 @@ class Settings(BaseSettings):
     tavily_api_key: str = ""
     enable_tavily: bool = False
     max_runs_per_ip_per_hour: int = 10
+    trust_proxy: bool = False  # honor X-Forwarded-For only behind a known reverse proxy
     data_dir: Path = Path("data")
     cache_dir: Path = Path("cache")
 

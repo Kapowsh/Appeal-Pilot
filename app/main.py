@@ -1,9 +1,10 @@
 """FastAPI app and routes."""
+import asyncio
 import json
 import logging
 from contextlib import asynccontextmanager
 from pathlib import Path
-from typing import Any, Callable, Literal
+from typing import Any, AsyncIterator, Callable, Literal
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import FileResponse, PlainTextResponse, StreamingResponse
@@ -22,6 +23,7 @@ from app.tools.pdf import extract_text
 log = logging.getLogger(__name__)
 STATIC_DIR = Path(__file__).resolve().parent.parent / "static"
 MAX_UPLOAD_BYTES = 5 * 1024 * 1024
+HEARTBEAT_S = 15
 
 
 class LetterEdit(BaseModel):
@@ -30,11 +32,43 @@ class LetterEdit(BaseModel):
     flag_action: Literal["keep", "remove"] | None = None
 
 
-def _client_ip(request: Request) -> str:
+def _client_ip(request: Request, trust_proxy: bool = False) -> str:
+    # X-Forwarded-For is client-controlled; only a trusted proxy's appended hop (the rightmost) counts.
     forwarded = request.headers.get("x-forwarded-for")
-    if forwarded:
-        return forwarded.split(",")[0].strip()
+    if trust_proxy and forwarded:
+        return forwarded.split(",")[-1].strip()
     return request.client.host if request.client else "unknown"
+
+
+async def stream_events(source: AsyncIterator[dict], case: Case, save: Callable[[Case], None],
+                        heartbeat_s: float = HEARTBEAT_S) -> AsyncIterator[str]:
+    """SSE frames for pipeline events, with comment pings while a stage is silent so proxies keep the stream open.
+    If the client disconnects, the run is cancelled and the case is left re-runnable ("error"), never "running"."""
+    queue: asyncio.Queue = asyncio.Queue()
+
+    async def produce():
+        try:
+            async for event in source:
+                queue.put_nowait(event)
+        finally:
+            queue.put_nowait(None)
+
+    task = asyncio.create_task(produce())
+    try:
+        while True:
+            try:
+                event = await asyncio.wait_for(queue.get(), heartbeat_s)
+            except asyncio.TimeoutError:
+                yield ": ping\n\n"
+                continue
+            if event is None:
+                break
+            yield f"data: {json.dumps(event)}\n\n"
+    finally:
+        task.cancel()
+        if case.status == "running":
+            case.status = "error"
+        save(case)
 
 
 async def _read_upload(form, field: str) -> str:
@@ -112,17 +146,11 @@ def create_app(settings: Settings | None = None, llm_factory: Callable[[], Any] 
         case = get_case(case_id)
         if case.status not in ("new", "error"):
             raise HTTPException(409, f"Case is {case.status}; it cannot be run again")
-        if not limiter.hit(_client_ip(request)):
+        if not limiter.hit(_client_ip(request, settings.trust_proxy)):
             raise HTTPException(429, "Run limit reached for this hour. Please try again later.")
         case.status = "running"
-        llm = llm_factory()
-
-        async def events():
-            async for event in run_pipeline(case, llm, settings, request.app.state.index):
-                yield f"data: {json.dumps(event)}\n\n"
-            store.save(case)
-
-        return StreamingResponse(events(), media_type="text/event-stream",
+        source = run_pipeline(case, llm_factory(), settings, request.app.state.index)
+        return StreamingResponse(stream_events(source, case, store.save), media_type="text/event-stream",
                                  headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"})
 
     @app.patch("/api/cases/{case_id}/letter")

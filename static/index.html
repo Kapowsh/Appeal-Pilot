@@ -353,7 +353,8 @@ function renderCriteria() {
     row.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(); } });
     return row;
   }));
-  const refs = current?.external_refs || [];
+  // Third-party URLs: only http(s) links are rendered (no javascript: or data: URLs).
+  const refs = (current?.external_refs || []).filter((r) => /^https?:\/\//i.test(r.url || ""));
   const box = $("#external-refs");
   box.hidden = refs.length === 0;
   box.querySelector("ul").replaceChildren(...refs.map((r) =>

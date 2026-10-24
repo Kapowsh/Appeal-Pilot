@@ -76,7 +76,7 @@ TODO: run `uv run python eval/run_eval.py` with Token Factory credentials, then 
 7. Docker: `docker build -t appeal-pilot .`, then `docker run -p 8080:8080 --env-file .env appeal-pilot`.
 8. Regenerate the demo PDFs: `uv run python scripts/make_pdfs.py`.
 
-Runs are rate-limited per IP (`MAX_RUNS_PER_IP_PER_HOUR`, default 10) to protect credits on the public demo. The demo needs no login. Tavily search is optional and off by default (`ENABLE_TAVILY=false`). Its results are shown as external references only and are never used for matching.
+Runs are rate-limited per IP (`MAX_RUNS_PER_IP_PER_HOUR`, default 10) to protect credits on the public demo. Behind a reverse proxy, set `TRUST_PROXY=true` so the limit uses the proxy-appended client IP; otherwise `X-Forwarded-For` is ignored. The demo needs no login. Tavily search is optional and off by default (`ENABLE_TAVILY=false`). Its results are shown as external references only and are never used for matching.
 
 Hosted demo: TODO (deployment URL).
 

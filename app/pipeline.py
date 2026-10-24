@@ -43,7 +43,8 @@ async def run_pipeline(case: Case, llm, settings: Settings, index: PolicyIndex) 
         yield {"step": "intake", "status": "done", "data": case.denial.model_dump()}
 
         yield {"step": "policy", "status": "running", "data": None}
-        case.criteria, case.external_refs = await stage("policy", policy.run, llm, settings, index, case.denial, tavily)
+        case.criteria, case.external_refs = await stage("policy", policy.run, llm, settings, index, case.denial, tavily,
+                                                        case.denial_text)
         if not case.criteria:
             raise ValueError(f"No matching coverage criteria found for {case.denial.payer} / {case.denial.service}.")
         yield {"step": "policy", "status": "done",
@@ -70,6 +71,9 @@ async def run_pipeline(case: Case, llm, settings: Settings, index: PolicyIndex) 
 
         case.status = "needs_review"
         yield {"step": "complete", "status": "needs_review", "data": {"case_id": case.id}}
+    except (asyncio.CancelledError, GeneratorExit):
+        case.status = "error"  # client went away mid-run: leave the case re-runnable, not stuck in "running"
+        raise
     except Exception as e:
         log.exception("Pipeline failed at %s", step)
         case.status = "error"

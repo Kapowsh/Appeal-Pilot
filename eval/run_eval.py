@@ -93,8 +93,9 @@ def citation_validity(draft: AppealDraft, chart_lines: list[ChartLine], criteria
 
 
 def inject_fabrications(draft: AppealDraft, chart_lines: list[ChartLine]) -> tuple[AppealDraft, list[str]]:
-    """A false date (02/29/2019 does not exist) and a symptom absent from every chart."""
-    cite = [chart_lines[0].id]
+    """A false date (02/29/2019 does not exist) and a symptom absent from every chart.
+    Both cite a mid-chart clinical line, not the L1 "SYNTHETIC RECORD" banner, so catching them is not trivial."""
+    cite = [chart_lines[len(chart_lines) // 2].id]
     fabricated = [
         LetterSentence(id="F1", text="The patient was last evaluated on 02/29/2019, confirming the findings above.",
                        cites=cite),

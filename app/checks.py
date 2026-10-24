@@ -4,7 +4,10 @@ import re
 from app.schemas import AppealDraft, ChartLine, Criterion, ReviewFlag
 
 _BOILERPLATE = re.compile(
-    r"^\s*(dear|sincerely|respectfully submitted|thank you|regards|re:|to whom|cc:|enclosures?)\b", re.IGNORECASE)
+    r"^\s*(?:(?:dear|sincerely|respectfully submitted|thank you|regards|to whom|enclosures?)\b|re:|cc:)", re.IGNORECASE)
+# Citable pseudo-ID for facts taken from the denial letter itself (dates, member ID, policy ID).
+DENIAL_ID = "DENIAL"
+_ID_TOKEN = re.compile(r"\b(?:[LCSF]\d+|DENIAL)\b", re.IGNORECASE)
 _STOPWORDS = {"about", "after", "again", "patient", "which", "their", "there", "these", "those", "would",
               "could", "should", "while", "where", "being", "other", "under", "since", "before", "member"}
 
@@ -31,31 +34,45 @@ def is_factual(text: str, chart_text: str) -> bool:
     return len(_content_words(text) & _content_words(chart_text)) >= 2
 
 
+_MONTHS = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october",
+           "november", "december"]
+_SPELLED_DATE = re.compile(rf"\b({'|'.join(_MONTHS)})\s+(\d{{1,2}}),?\s+(\d{{4}})\b", re.IGNORECASE)
+
+
 def _numbers(text: str) -> set[str]:
     # "03/14/2025" -> {"3", "14", "2025"}; leading zeros never decide a match.
-    return {n.lstrip("0") or "0" for n in re.findall(r"\d+", text)}
+    # "September 18, 2026" also yields the month number, so it matches "2026-09-18".
+    months = {str(_MONTHS.index(m.group(1).lower()) + 1) for m in _SPELLED_DATE.finditer(text)}
+    return {n.lstrip("0") or "0" for n in re.findall(r"\d+", text)} | months
 
 
 def deterministic_checks(draft: AppealDraft, chart_lines: list[ChartLine], criteria: list[Criterion],
                          denial_text: str = "") -> list[ReviewFlag]:
     lines = {l.id: l.text for l in chart_lines}
     crits = {c.id: f"{c.text} {c.source_section} {c.source_doc}" for c in criteria}
+    known = {**lines, **crits, DENIAL_ID: denial_text}
     chart_text = " ".join(lines.values())
+    # "criterion 2.2" names a section, it is not a clinical number.
+    sections = [re.escape(c.source_section) for c in criteria if c.source_section]
+    section_ref = re.compile(rf"\b(?:{'|'.join(sections)})\b") if sections else None
     flags: list[ReviewFlag] = []
     for s in draft.sentences:
         issues: list[str] = []
         action = "revise"
-        cites = [normalize_id(c) for c in s.cites]
+        cites = [c for c in dict.fromkeys(normalize_id(c) for c in s.cites) if c]
         for cid in cites:
-            if cid not in lines and cid not in crits:
+            if cid not in known:
                 issues.append(f"cites unknown ID {cid}")
         if not cites and is_factual(s.text, chart_text):
             issues.append("factual claim without citation")
         if cites:
-            sources = " ".join(lines.get(c) or crits.get(c) or "" for c in cites)
+            sources = " ".join(known.get(c) or "" for c in cites)
         else:
             sources = f"{denial_text} {chart_text}"
-        missing = sorted(_numbers(s.text) - _numbers(sources), key=lambda n: (len(n), n))
+        claim = _ID_TOKEN.sub(" ", s.text)  # inline "(L1)" markers are not numbers
+        if section_ref:
+            claim = section_ref.sub(" ", claim)
+        missing = sorted(_numbers(claim) - _numbers(sources), key=lambda n: (len(n), n))
         if missing:
             issues.append(f"number/date not found in cited sources: {', '.join(missing)}")
             action = "remove"

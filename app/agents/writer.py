@@ -1,11 +1,13 @@
 from app.agents import format_lines
+from app.checks import normalize_id
 from app.schemas import AppealDraft, ChartLine, Criterion, CriterionMatch, Denial, LetterSentence
 
 SYSTEM = """You draft a formal prior-authorization appeal letter from a treating clinician to a payer.
 Return the letter as an ordered list of sentences. Each sentence has text and cites.
 Rules:
-- cites lists the chart line IDs (L#) and criterion IDs (C#) that support the sentence.
+- cites lists the chart line IDs (L#) and criterion IDs (C#) that support the sentence. Cite "DENIAL" for facts taken from the denial letter (denial date, member ID, policy ID).
 - Every sentence that states a clinical fact, date, number, or criterion must cite its support.
+- Put IDs only in cites. Never write IDs such as L4 or C2 inside the sentence text.
 - Salutation, subject line, closing, and signature lines have empty cites.
 - Argue only from criteria whose status is "met", using their evidence lines.
 - For criteria that are "not_met" or "unclear", never claim they are met. Instead request a peer-to-peer review with the medical director to discuss them.
@@ -23,5 +25,7 @@ def run(llm, settings, denial: Denial, criteria: list[Criterion], matches: list[
     user = (f"Denial:\n{denial.model_dump_json(indent=1)}\n\nCriteria and match results:\n{crit_text}\n\n"
             f"Chart lines:\n{format_lines(chart_lines)}")
     draft = llm.chat_json(settings.model_reason, SYSTEM, user, AppealDraft, step="draft", max_tokens=4096)
-    return AppealDraft(sentences=[LetterSentence(id=f"S{i}", text=s.text.strip(), cites=s.cites)
-                                  for i, s in enumerate((s for s in draft.sentences if s.text.strip()), start=1)])
+    return AppealDraft(sentences=[
+        LetterSentence(id=f"S{i}", text=s.text.strip(),
+                       cites=list(dict.fromkeys(normalize_id(c) for c in s.cites if c.strip())))
+        for i, s in enumerate((s for s in draft.sentences if s.text.strip()), start=1)])
