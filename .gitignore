@@ -10,3 +10,4 @@ tests/
 eval/
 scripts/
 data/imr_patterns.md
+uv.lock

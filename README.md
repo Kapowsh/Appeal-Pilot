@@ -36,10 +36,12 @@ The 15 coverage policies are adapted from real public policies (CMS, Aetna, BCBS
 
 ## Run it
 
+Requires Python 3.11+.
+
 ```bash
-uv sync
+pip install -r requirements.txt
 cp .env.example .env    # add NEBIUS_API_KEY and the MODEL_* IDs
-uv run uvicorn app.main:app --port 8080
+uvicorn app.main:app --port 8080
 ```
 
 
