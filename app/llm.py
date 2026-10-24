@@ -38,9 +38,12 @@ def _clean(content: str) -> str:
 
 class LLMClient:
     def __init__(self, settings: Settings, client: Any = None, sleep: Callable[[float], None] = time.sleep):
-        self.client = client or OpenAI(base_url=settings.nebius_base_url, api_key=settings.nebius_api_key,
-                                       timeout=TIMEOUT_S, max_retries=0)
+        if client is None and settings.nebius_api_key:
+            client = OpenAI(base_url=settings.nebius_base_url, api_key=settings.nebius_api_key,
+                            timeout=TIMEOUT_S, max_retries=0)
+        self.client = client
         self._sleep = sleep
+        self._missing_key = client is None
         self.json_schema_ok = True
         self.usage: list[dict] = []
 
@@ -72,6 +75,8 @@ class LLMClient:
             except openai.BadRequestError as e:
                 log.warning("json_schema rejected by %s, falling back to json_object: %s", model, e)
                 self.json_schema_ok = False
+            except openai.APIStatusError as e:
+                raise LLMError(f"Token Factory rejected the request ({e.status_code}): {e}") from e
         try:
             return call({"type": "json_object"})
         except openai.APIStatusError as e:
@@ -87,6 +92,7 @@ class LLMClient:
 
     def chat_json(self, model: str, system: str, user: str, schema: type[T], *, step: str = "",
                   max_tokens: int = 2048, temperature: float = 0.1) -> T:
+        self._check_ready(model)
         system_msg = {"role": "system", "content": system + "\n\nReturn only JSON matching this schema:\n"
                       + json.dumps(schema.model_json_schema())}
         user_content = user
@@ -104,7 +110,15 @@ class LLMClient:
                                 "Return only valid JSON matching the schema.")
         raise LLMError(f"{step or model}: model output failed validation twice: {err}")
 
+    def _check_ready(self, model: str) -> None:
+        if not model:
+            raise LLMError("Model ID not configured: set MODEL_FAST / MODEL_REASON in .env "
+                           "(run scripts/discover_models.py).")
+        if self._missing_key:
+            raise LLMError("NEBIUS_API_KEY is not set. Add it to .env to call Nebius Token Factory.")
+
     def embed(self, model: str, texts: list[str]) -> list[list[float]]:
+        self._check_ready(model)
         started = time.perf_counter()
         resp = self._with_retries(lambda: self.client.embeddings.create(model=model, input=texts))
         self._record("embed", model, started, resp.usage)

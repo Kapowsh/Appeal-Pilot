@@ -72,3 +72,22 @@ def test_records_usage():
 def test_strips_think_and_fences():
     client, _, _ = make(['<think>hmm</think>\n```json\n{"x":4}\n```'])
     assert client.chat_json("m", "sys", "user", Out).x == 4
+
+
+def test_missing_model_raises_readable():
+    client, fake, _ = make(['{"x":1}'])
+    with pytest.raises(LLMError, match="MODEL_FAST / MODEL_REASON"):
+        client.chat_json("", "sys", "user", Out)
+    assert fake.calls == []
+
+
+def test_missing_api_key_raises_without_network():
+    client = LLMClient(Settings(_env_file=None, nebius_api_key=""))
+    with pytest.raises(LLMError, match="NEBIUS_API_KEY"):
+        client.chat_json("m", "sys", "user", Out)
+
+
+def test_auth_error_wrapped():
+    client, _, _ = make([api_error(openai.AuthenticationError, 401)])
+    with pytest.raises(LLMError, match="401"):
+        client.chat_json("m", "sys", "user", Out)

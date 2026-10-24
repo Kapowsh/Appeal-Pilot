@@ -1,2 +1,468 @@
 <!doctype html>
-<html><body><div id="banner">Synthetic data only · Drafting aid, not medical advice · Clinician sign-off required before use</div></body></html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Appeal-Pilot</title>
+<style>
+  :root {
+    --accent: #2f6fde;
+    --accent-soft: #e8f0fd;
+    --text: #1d2330;
+    --muted: #5d6677;
+    --border: #d9dee7;
+    --bg: #f6f7f9;
+    --card: #ffffff;
+    --ok: #1d7a46;
+    --ok-bg: #e5f4ea;
+    --bad: #b42318;
+    --bad-bg: #fdecea;
+    --warn: #8a5a00;
+    --warn-bg: #fdf3dc;
+    --hl: #fff3b0;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+         color: var(--text); background: var(--bg); line-height: 1.45; font-size: 15px; }
+  main { max-width: 1200px; margin: 0 auto; padding: 0 16px 48px; }
+  #banner { background: var(--warn-bg); color: var(--warn); border-bottom: 1px solid #f0d9a6; padding: 8px 16px;
+            text-align: center; font-weight: 600; font-size: 14px; }
+  header { display: flex; align-items: baseline; gap: 12px; padding: 20px 0 8px; }
+  header h1 { margin: 0; font-size: 22px; }
+  header p { margin: 0; color: var(--muted); }
+  section.card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin-top: 16px; }
+  h2 { font-size: 16px; margin: 0 0 12px; }
+  .row { display: flex; flex-wrap: wrap; gap: 12px; align-items: end; }
+  label { display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: var(--muted); }
+  select, input[type=file] { font: inherit; padding: 6px; border: 1px solid var(--border); border-radius: 6px; background: #fff; }
+  button { font: inherit; padding: 8px 16px; border-radius: 6px; border: 1px solid var(--accent); background: var(--accent);
+           color: #fff; cursor: pointer; }
+  button.secondary { background: #fff; color: var(--accent); }
+  button:disabled { opacity: .45; cursor: not-allowed; }
+  button.small { padding: 2px 10px; font-size: 13px; }
+  .or { color: var(--muted); padding-bottom: 8px; }
+  #msg { margin-top: 10px; color: var(--muted); min-height: 1.4em; }
+  #msg.error { color: var(--bad); }
+  #step-tracker { display: flex; list-style: none; padding: 0; margin: 0; gap: 8px; flex-wrap: wrap; }
+  #step-tracker li { flex: 1; min-width: 110px; padding: 8px 10px; border: 1px solid var(--border); border-radius: 6px;
+                     color: var(--muted); background: #fff; font-size: 14px; }
+  #step-tracker li::before { content: "○ "; }
+  #step-tracker li.running { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+  #step-tracker li.running::before { content: "◔ "; }
+  #step-tracker li.done { color: var(--ok); border-color: #b9dfc6; }
+  #step-tracker li.done::before { content: "● "; }
+  #step-tracker li.error { color: var(--bad); border-color: #f1b8b2; background: var(--bad-bg); }
+  #step-tracker li.error::before { content: "✕ "; }
+  dl#denial-card { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px 16px; margin: 0; }
+  dl#denial-card div { min-width: 0; }
+  dt { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .03em; }
+  dd { margin: 0; overflow-wrap: anywhere; }
+  .deadline dd { background: var(--hl); display: inline-block; padding: 0 6px; border-radius: 4px; font-weight: 600; }
+  .grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 16px; }
+  @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { font-size: 12px; color: var(--muted); text-transform: uppercase; }
+  tbody tr { cursor: pointer; }
+  tbody tr:hover { background: var(--accent-soft); }
+  tbody tr.selected { background: var(--accent-soft); box-shadow: inset 3px 0 0 var(--accent); }
+  .badge { display: inline-block; padding: 1px 8px; border-radius: 10px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+  .badge.met { background: var(--ok-bg); color: var(--ok); }
+  .badge.not_met { background: var(--bad-bg); color: var(--bad); }
+  .badge.unclear { background: var(--warn-bg); color: var(--warn); }
+  .rationale { color: var(--muted); font-size: 13px; margin-top: 2px; }
+  #external-refs { margin-top: 12px; font-size: 13px; }
+  #external-refs ul { padding-left: 18px; margin: 4px 0 0; }
+  #chart-panel { max-height: 560px; overflow: auto; font-size: 14px; }
+  .line { display: flex; gap: 10px; padding: 3px 6px; border-radius: 4px; }
+  .line .lid { color: var(--muted); font-variant-numeric: tabular-nums; min-width: 34px; font-size: 12px; padding-top: 2px; }
+  .line.hl { background: var(--hl); }
+  #letter { font-family: Georgia, "Times New Roman", serif; font-size: 15px; }
+  .sentence-row { padding: 4px 6px; border-radius: 4px; margin: 2px 0; }
+  .sentence-row:hover { background: #fafbfd; }
+  .sentence { outline: none; border-radius: 3px; }
+  .sentence[contenteditable=true]:focus { background: var(--accent-soft); }
+  .sentence-row.flagged .sentence { text-decoration: line-through; color: var(--bad); }
+  .sentence-row.removed { opacity: .5; }
+  .sentence-row.removed .sentence { text-decoration: line-through; }
+  .flag { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 13px; color: var(--bad);
+          display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 2px; }
+  .flag.resolved { color: var(--muted); }
+  .cites { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; color: var(--muted); margin-left: 6px; }
+  .actions { display: flex; gap: 12px; align-items: center; margin-top: 16px; flex-wrap: wrap; }
+  #review-summary { color: var(--muted); font-size: 14px; margin: 0 0 8px; }
+  .empty { color: var(--muted); font-style: italic; }
+  footer#usage-footer { margin-top: 16px; font-size: 13px; color: var(--muted); }
+  footer table { font-size: 13px; }
+</style>
+</head>
+<body>
+<div id="banner" role="note">Synthetic data only · Drafting aid, not medical advice · Clinician sign-off required before use</div>
+<main>
+  <header>
+    <h1>Appeal-Pilot</h1>
+    <p>Drafts cited prior-authorization appeal letters for clinician review.</p>
+  </header>
+
+  <section class="card" aria-labelledby="input-h">
+    <h2 id="input-h">1. Choose a case</h2>
+    <div class="row">
+      <label>Sample case
+        <select id="sample-select"><option value="">Loading samples…</option></select>
+      </label>
+      <span class="or">or upload</span>
+      <label>Denial letter (PDF or .txt)<input type="file" id="denial-file" accept=".pdf,.txt"></label>
+      <label>Chart notes (PDF or .txt)<input type="file" id="chart-file" accept=".pdf,.txt"></label>
+      <button id="run-btn" type="button">Run</button>
+    </div>
+    <div id="msg" role="status" aria-live="polite"></div>
+  </section>
+
+  <section class="card" aria-labelledby="steps-h">
+    <h2 id="steps-h">2. Progress</h2>
+    <ol id="step-tracker">
+      <li data-step="intake">Intake</li>
+      <li data-step="policy">Policy</li>
+      <li data-step="match">Match</li>
+      <li data-step="draft">Draft</li>
+      <li data-step="review">Review</li>
+    </ol>
+  </section>
+
+  <section class="card" aria-labelledby="denial-h">
+    <h2 id="denial-h">3. Denial summary</h2>
+    <dl id="denial-card"><div><dd class="empty">Run a case to extract the denial.</dd></div></dl>
+  </section>
+
+  <div class="grid">
+    <section class="card" aria-labelledby="criteria-h">
+      <h2 id="criteria-h">4. Coverage criteria</h2>
+      <table id="criteria-table">
+        <thead><tr><th>Criterion</th><th>Source</th><th>Status</th><th>Evidence</th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <div id="external-refs" hidden>
+        <strong>External references (not used for matching)</strong>
+        <ul></ul>
+      </div>
+    </section>
+    <section class="card" aria-labelledby="chart-h">
+      <h2 id="chart-h">5. Chart notes</h2>
+      <div id="chart-panel"><p class="empty">Numbered chart lines appear here.</p></div>
+    </section>
+  </div>
+
+  <section class="card" aria-labelledby="letter-h">
+    <h2 id="letter-h">6. Appeal letter</h2>
+    <p id="review-summary"></p>
+    <div id="letter"><p class="empty">The draft appears here after the review step.</p></div>
+    <div class="actions">
+      <button id="approve-btn" type="button" disabled>Approve</button>
+      <button id="download-btn" type="button" class="secondary" disabled>Download letter</button>
+      <span id="approve-hint" class="rationale"></span>
+    </div>
+  </section>
+
+  <footer id="usage-footer"></footer>
+</main>
+
+<script>
+"use strict";
+const $ = (sel) => document.querySelector(sel);
+const STEP_OF = { intake: "intake", policy: "policy", match: "match", draft: "draft", review: "review", checks: "review" };
+let current = null;   // the case JSON
+let caseId = null;
+
+function el(tag, attrs = {}, ...children) {
+  const node = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) {
+    if (k === "class") node.className = v;
+    else if (k === "text") node.textContent = v;
+    else if (k.startsWith("on")) node.addEventListener(k.slice(2), v);
+    else if (v !== false && v != null) node.setAttribute(k, v === true ? "" : v);
+  }
+  for (const c of children) if (c != null) node.append(c instanceof Node ? c : document.createTextNode(String(c)));
+  return node;
+}
+
+function setMsg(text, isError = false) {
+  const m = $("#msg");
+  m.textContent = text;
+  m.className = isError ? "error" : "";
+}
+
+async function api(path, opts = {}) {
+  const r = await fetch(path, opts);
+  if (!r.ok) {
+    let detail = `${r.status} ${r.statusText}`;
+    try { detail = (await r.json()).detail || detail; } catch (_) {}
+    throw new Error(detail);
+  }
+  return r;
+}
+
+async function loadSamples() {
+  const sel = $("#sample-select");
+  try {
+    const samples = await (await api("/api/samples")).json();
+    sel.replaceChildren(el("option", { value: "" , text: "— select a sample —" }),
+      ...samples.map((s) => el("option", { value: s.id, text: `${s.id.replace("case_", "#")} · ${s.title}` })));
+  } catch (e) {
+    sel.replaceChildren(el("option", { value: "", text: "Samples unavailable" }));
+  }
+}
+
+function resetView() {
+  current = null;
+  document.querySelectorAll("#step-tracker li").forEach((li) => (li.className = ""));
+  $("#denial-card").replaceChildren(el("div", {}, el("dd", { class: "empty", text: "Waiting for intake…" })));
+  $("#criteria-table tbody").replaceChildren();
+  $("#external-refs").hidden = true;
+  $("#chart-panel").replaceChildren();
+  $("#letter").replaceChildren(el("p", { class: "empty", text: "The draft appears here after the review step." }));
+  $("#review-summary").textContent = "";
+  $("#usage-footer").replaceChildren();
+  updateButtons();
+}
+
+async function createCase() {
+  const denial = $("#denial-file").files[0];
+  const chart = $("#chart-file").files[0];
+  if (denial || chart) {
+    if (!(denial && chart)) throw new Error("Upload both a denial letter and chart notes.");
+    const form = new FormData();
+    form.append("denial", denial);
+    form.append("chart", chart);
+    return (await (await api("/api/cases", { method: "POST", body: form })).json()).case_id;
+  }
+  const sampleId = $("#sample-select").value;
+  if (!sampleId) throw new Error("Choose a sample case or upload two files.");
+  return (await (await api("/api/cases", {
+    method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ sample_id: sampleId }),
+  })).json()).case_id;
+}
+
+async function run() {
+  const btn = $("#run-btn");
+  btn.disabled = true;
+  resetView();
+  try {
+    setMsg("Creating case…");
+    caseId = await createCase();
+    current = await (await api(`/api/cases/${caseId}`)).json();
+    renderChart();
+    setMsg("Running pipeline…");
+    await streamRun(caseId);
+  } catch (e) {
+    setMsg(e.message, true);
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+// fetch + stream reader rather than EventSource, so 409/429 responses can show their message.
+async function streamRun(id) {
+  const resp = await api(`/api/cases/${id}/run`);
+  const reader = resp.body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = "";
+  for (;;) {
+    const { value, done } = await reader.read();
+    if (done) break;
+    buffer += decoder.decode(value, { stream: true });
+    let idx;
+    while ((idx = buffer.indexOf("\n\n")) !== -1) {
+      const chunk = buffer.slice(0, idx);
+      buffer = buffer.slice(idx + 2);
+      for (const line of chunk.split("\n")) if (line.startsWith("data: ")) await onEvent(JSON.parse(line.slice(6)));
+    }
+  }
+}
+
+async function onEvent(ev) {
+  const li = document.querySelector(`#step-tracker li[data-step="${STEP_OF[ev.step]}"]`);
+  if (ev.status === "error") {
+    if (li) li.className = "error";
+    setMsg(`Error during ${ev.step}: ${ev.data.message}`, true);
+    return;
+  }
+  if (li && ev.status === "running") li.className = "running";
+  if (li && ev.status === "done" && ev.step !== "review") li.className = "done";
+  if (ev.step === "intake" && ev.status === "done") { current.denial = ev.data; renderDenial(); }
+  if (ev.step === "policy" && ev.status === "done") {
+    current.criteria = ev.data.criteria; current.external_refs = ev.data.external_refs; renderCriteria();
+  }
+  if (ev.step === "match" && ev.status === "done") { current.matches = ev.data.matches; renderCriteria(); }
+  if (ev.status === "needs_review") {
+    current = await (await api(`/api/cases/${caseId}`)).json();
+    renderAll();
+    const n = (current.review?.flags || []).length;
+    setMsg(n ? `Draft ready. ${n} sentence(s) flagged: keep or remove each before approving.` : "Draft ready for clinician review.");
+  }
+}
+
+function renderAll() {
+  renderDenial();
+  renderCriteria();
+  renderChart();
+  renderLetter();
+  renderUsage();
+  updateButtons();
+}
+
+function renderDenial() {
+  const d = current?.denial;
+  if (!d) return;
+  const fields = [["Payer", d.payer], ["Patient", d.patient_name], ["Member ID", d.member_id], ["Service", d.service],
+    ["CPT / HCPCS", d.cpt_or_hcpcs], ["ICD-10", (d.icd10 || []).join(", ")], ["Denial date", d.denial_date],
+    ["Appeal deadline", d.appeal_deadline], ["Denial reason", d.denial_reason]];
+  $("#denial-card").replaceChildren(...fields.map(([k, v]) =>
+    el("div", { class: k === "Appeal deadline" ? "deadline" : "" }, el("dt", { text: k }), el("dd", { text: v || "—" }))));
+}
+
+function highlightLines(ids, scroll) {
+  document.querySelectorAll("#chart-panel .line.hl").forEach((n) => n.classList.remove("hl"));
+  let first = null;
+  for (const id of ids) {
+    const n = document.querySelector(`#chart-panel [data-line="${CSS.escape(id)}"]`);
+    if (n) { n.classList.add("hl"); first = first || n; }
+  }
+  if (scroll && first) first.scrollIntoView({ block: "nearest", behavior: "smooth" });
+}
+
+function renderCriteria() {
+  const tbody = $("#criteria-table tbody");
+  const matches = Object.fromEntries((current?.matches || []).map((m) => [m.criterion_id, m]));
+  tbody.replaceChildren(...(current?.criteria || []).map((c) => {
+    const m = matches[c.id];
+    const status = m ? m.status : null;
+    const label = { met: "Met", not_met: "Not met", unclear: "Unclear" }[status] || "…";
+    const row = el("tr", { "data-criterion": c.id, tabindex: "0" },
+      el("td", {}, el("strong", { text: `${c.id} ` }), c.text, m ? el("div", { class: "rationale", text: m.rationale }) : null),
+      el("td", { text: `${c.source_doc} §${c.source_section}` }),
+      el("td", {}, el("span", { class: `badge ${status || ""}`, text: label })),
+      el("td", { text: m && m.evidence_line_ids.length ? m.evidence_line_ids.join(", ") : "—" }));
+    const select = () => {
+      const was = row.classList.contains("selected");
+      tbody.querySelectorAll("tr.selected").forEach((r) => r.classList.remove("selected"));
+      if (was) { highlightLines([], false); return; }
+      row.classList.add("selected");
+      highlightLines(m ? m.evidence_line_ids : [], true);
+    };
+    row.addEventListener("click", select);
+    row.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(); } });
+    return row;
+  }));
+  const refs = current?.external_refs || [];
+  const box = $("#external-refs");
+  box.hidden = refs.length === 0;
+  box.querySelector("ul").replaceChildren(...refs.map((r) =>
+    el("li", {}, el("a", { href: r.url, target: "_blank", rel: "noopener noreferrer", text: r.title || r.url }))));
+}
+
+function renderChart() {
+  const lines = current?.chart_lines || [];
+  $("#chart-panel").replaceChildren(...lines.map((l) =>
+    el("div", { class: "line", "data-line": l.id }, el("span", { class: "lid", text: l.id }), el("span", { text: l.text }))));
+}
+
+function flagsById() {
+  return Object.fromEntries((current?.review?.flags || []).map((f) => [f.sentence_id, f]));
+}
+
+async function patchLetter(body) {
+  current = await (await api(`/api/cases/${caseId}/letter`, {
+    method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body),
+  })).json();
+}
+
+function renderLetter() {
+  const draft = current?.draft;
+  if (!draft) return;
+  const flags = flagsById();
+  const editable = current.status === "needs_review";
+  $("#review-summary").textContent = current.review ? `Reviewer: ${current.review.summary}` : "";
+  $("#letter").replaceChildren(...draft.sentences.map((s) => {
+    const flag = flags[s.id];
+    const resolution = current.flag_resolutions[s.id];
+    const rowClass = ["sentence-row", flag && !resolution ? "flagged" : "", resolution === "remove" ? "removed" : ""].join(" ");
+    const span = el("span", { class: "sentence", contenteditable: editable ? "true" : "false", spellcheck: "true",
+      title: s.cites.length ? `Cites: ${s.cites.join(", ")}` : "No citations", text: s.text });
+    span.addEventListener("blur", async () => {
+      const text = span.textContent.trim();
+      if (text === s.text) return;
+      try { await patchLetter({ sentence_id: s.id, text }); renderLetter(); updateButtons(); }
+      catch (e) { setMsg(e.message, true); span.textContent = s.text; }
+    });
+    span.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); span.blur(); } });
+    const row = el("div", { class: rowClass, "data-sentence": s.id }, span,
+      s.cites.length ? el("span", { class: "cites", text: `[${s.cites.join(", ")}]` }) : null);
+    row.addEventListener("mouseenter", () => highlightLines(s.cites, false));
+    row.addEventListener("mouseleave", () => highlightLines([], false));
+    if (flag) {
+      const resolveBtn = (action, label) => el("button", { type: "button", class: "small secondary", disabled: !editable,
+        text: label, onclick: async () => {
+          try { await patchLetter({ sentence_id: s.id, flag_action: action }); renderLetter(); updateButtons(); }
+          catch (e) { setMsg(e.message, true); }
+        } });
+      row.append(el("div", { class: `flag${resolution ? " resolved" : ""}` },
+        el("span", { text: `⚑ ${flag.issue}${resolution ? ` (${resolution === "keep" ? "kept" : "removed"})` : ""}` }),
+        resolveBtn("keep", "Keep"), resolveBtn("remove", "Remove")));
+    }
+    return row;
+  }));
+}
+
+function unresolvedCount() {
+  return Object.keys(flagsById()).filter((id) => !current.flag_resolutions[id]).length;
+}
+
+function updateButtons() {
+  const approve = $("#approve-btn");
+  const download = $("#download-btn");
+  const hint = $("#approve-hint");
+  if (!current || !current.draft) {
+    approve.disabled = true; download.disabled = true; hint.textContent = ""; return;
+  }
+  const open = unresolvedCount();
+  approve.disabled = current.status !== "needs_review" || open > 0;
+  download.disabled = current.status !== "approved";
+  hint.textContent = current.status === "approved" ? "Approved. Nothing is sent; download the letter to use it."
+    : open > 0 ? `${open} flag(s) to resolve before approval.` : "All flags resolved.";
+}
+
+async function approve() {
+  try {
+    current = (await (await api(`/api/cases/${caseId}/approve`, { method: "POST" })).json());
+    renderLetter();
+    updateButtons();
+    setMsg("Letter approved and marked final.");
+  } catch (e) { setMsg(e.message, true); }
+}
+
+function renderUsage() {
+  const usage = current?.usage || [];
+  if (!usage.length) return;
+  const steps = {};
+  for (const u of usage) {
+    const s = steps[u.step] || (steps[u.step] = { models: new Set(), tokens: 0, ms: 0 });
+    s.models.add(u.model); s.tokens += u.total_tokens; s.ms += u.latency_ms;
+  }
+  const rows = Object.entries(steps).map(([step, s]) => el("tr", {},
+    el("td", { text: step }), el("td", { text: [...s.models].join(", ") }),
+    el("td", { text: s.tokens.toLocaleString() }), el("td", { text: `${(s.ms / 1000).toFixed(1)} s` })));
+  const total = usage.reduce((a, u) => ({ t: a.t + u.total_tokens, ms: a.ms + u.latency_ms }), { t: 0, ms: 0 });
+  $("#usage-footer").replaceChildren(el("strong", { text: "Models and usage (NVIDIA Nemotron via Nebius Token Factory)" }),
+    el("table", {}, el("thead", {}, el("tr", {}, el("th", { text: "Step" }), el("th", { text: "Model" }),
+      el("th", { text: "Tokens" }), el("th", { text: "Latency" }))),
+      el("tbody", {}, ...rows, el("tr", {}, el("td", {}, el("strong", { text: "Total" })), el("td"),
+        el("td", { text: total.t.toLocaleString() }), el("td", { text: `${(total.ms / 1000).toFixed(1)} s` })))));
+}
+
+$("#run-btn").addEventListener("click", run);
+$("#approve-btn").addEventListener("click", approve);
+$("#download-btn").addEventListener("click", () => { if (caseId) window.location.href = `/api/cases/${caseId}/export?format=txt`; });
+loadSamples();
+</script>
+</body>
+</html>
