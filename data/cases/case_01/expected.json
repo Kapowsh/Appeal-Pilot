@@ -1,0 +1,56 @@
+{
+  "title": "Acme Health · Lumbar MRI",
+  "policy_id": "AH-RAD-012",
+  "category": "supported",
+  "appealable": true,
+  "denial": {
+    "payer": "Acme Health",
+    "member_id": "AH-48213907",
+    "patient_name": "Dana Whitfield",
+    "service": "MRI lumbar spine",
+    "cpt_or_hcpcs": "72148",
+    "icd10": [
+      "M54.16"
+    ],
+    "denial_reason": "Documentation does not show failure of at least 6 weeks of conservative therapy.",
+    "denial_date": "2026-09-18",
+    "appeal_deadline": "2026-11-17"
+  },
+  "criteria": [
+    {
+      "section": "2.1",
+      "status": "met",
+      "evidence": [
+        "L4",
+        "L5"
+      ]
+    },
+    {
+      "section": "2.2",
+      "status": "met",
+      "evidence": [
+        "L8",
+        "L9",
+        "L10",
+        "L19"
+      ]
+    },
+    {
+      "section": "2.3",
+      "status": "met",
+      "evidence": [
+        "L13",
+        "L14",
+        "L15",
+        "L16"
+      ]
+    },
+    {
+      "section": "2.4",
+      "status": "met",
+      "evidence": [
+        "L21"
+      ]
+    }
+  ]
+}

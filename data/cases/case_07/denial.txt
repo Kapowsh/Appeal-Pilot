@@ -1,0 +1,26 @@
+SYNTHETIC DOCUMENT - FOR DEMONSTRATION ONLY
+
+Northwind Care, Clinical Review Unit, 42 Sample Harbor Road, Fairview (fictional)
+
+NOTICE OF ADVERSE DETERMINATION - PRIOR AUTHORIZATION
+
+Date: September 25, 2026
+Member: Lena Haraldsen
+Member ID: NWC-62930571
+Requesting provider: Drew Castellano, MD (fictional)
+Service requested: CT abdomen and pelvis
+Code: CPT 74177
+Diagnosis codes: R10.13
+
+Dear Lena Haraldsen,
+
+Northwind Care reviewed the prior authorization request for CT abdomen and pelvis under Medical Policy NWC-IMG-118. The request is denied.
+
+Reason for denial: Ultrasound must be performed before CT of the abdomen and pelvis.
+
+This decision is based on section 2.3 of policy NWC-IMG-118. A clinician reviewed the records submitted with the request.
+
+Your right to appeal: you or your provider may submit a written appeal within 60 days of this notice. The appeal must be received by November 24, 2026. Your provider may also request a peer-to-peer discussion with our medical director.
+
+Sincerely,
+Medical Director, Northwind Care (fictional)

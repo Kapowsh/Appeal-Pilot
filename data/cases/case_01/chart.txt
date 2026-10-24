@@ -1,0 +1,25 @@
+SYNTHETIC RECORD - FOR DEMONSTRATION ONLY
+Patient: Dana Whitfield. DOB: 1979-03-22. MRN: SYN-100481.
+Visit date: 2026-09-10. Clinic: Lakeside Family Medicine (fictional).
+Chief complaint: low back pain radiating down the left leg.
+Symptoms began on 2026-07-20 after lifting boxes; pain has persisted for 7 weeks.
+Pain is rated 7/10 and worsens with sitting and bending.
+Patient reports numbness along the lateral left foot.
+Physical therapy twice weekly from 2026-07-27 to 2026-09-07 (6 weeks), with a home exercise program.
+Naproxen 500 mg twice daily since 2026-07-22 with minimal relief.
+PT discharge note states no meaningful improvement in radicular pain.
+No fever, weight loss, bowel or bladder changes, or history of cancer.
+Exam: lumbar paraspinal tenderness, flexion limited to 40 degrees.
+Straight leg raise positive on the left at 35 degrees.
+Decreased sensation to light touch in the left S1 dermatome.
+Left ankle reflex 1+, right 2+.
+Strength 5/5 in both lower extremities except left plantarflexion 4/5.
+Gait antalgic; heel and toe walking difficult on the left.
+Assessment: left S1 radiculopathy, likely L5-S1 disc herniation.
+Persistent symptoms despite 6 weeks of conservative management.
+Plan: MRI lumbar spine without contrast (CPT 72148).
+MRI findings will determine referral for epidural steroid injection versus spine surgery consultation.
+Continue home exercise program and naproxen.
+Return precautions reviewed for new weakness or bladder symptoms.
+Follow-up in 2 weeks or after imaging.
+Electronically signed: Morgan Ellery, MD (fictional).

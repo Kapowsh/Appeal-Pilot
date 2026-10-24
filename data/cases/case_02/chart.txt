@@ -1,0 +1,25 @@
+SYNTHETIC RECORD - FOR DEMONSTRATION ONLY
+Patient: Priya Halvorsen. DOB: 1968-11-02. MRN: SYN-100522.
+Visit date: 2026-09-02. Clinic: Harbor Internal Medicine (fictional).
+Problem list: type 2 diabetes mellitus with hyperglycemia (E11.65), hypertension, hyperlipidemia.
+Type 2 diabetes diagnosed in 2019.
+HbA1c 8.4% on 2026-08-25.
+Prior HbA1c 8.1% on 2026-03-14.
+Metformin started in 2019 and titrated to 1000 mg twice daily, the maximum tolerated dose, since 2024-01.
+Good adherence to metformin; pharmacy records confirm monthly refills.
+Glycemic goals not met on metformin monotherapy after more than 90 days at maximal dose.
+Current medications: metformin 1000 mg BID, lisinopril 20 mg daily, atorvastatin 40 mg daily.
+No current use of DPP-4 inhibitors or other GLP-1 receptor agonists.
+eGFR 78 mL/min/1.73m2 on 2026-08-25.
+BMI 31.2.
+No personal or family history of medullary thyroid carcinoma or MEN2.
+No history of pancreatitis.
+Met with a dietitian in 2025; continues a carbohydrate-controlled diet.
+Home fasting glucose readings 160-190 mg/dL.
+Exam: BP 132/80, HR 76. Feet: intact sensation, no ulcers.
+Assessment: type 2 diabetes not at goal on maximally tolerated metformin.
+Plan: start semaglutide 0.25 mg weekly and titrate per label for glycemic control.
+Indication is glycemic control, not weight loss alone.
+Continue metformin.
+Repeat HbA1c in 3 months.
+Electronically signed: Jordan Pike, DO (fictional).

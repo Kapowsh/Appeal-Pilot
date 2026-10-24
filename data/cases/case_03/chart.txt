@@ -1,0 +1,22 @@
+SYNTHETIC RECORD - FOR DEMONSTRATION ONLY
+Patient: Tomas Brightwater. DOB: 1957-06-15. MRN: SYN-100603.
+Visit date: 2026-08-28. Clinic: Northgate Endocrinology (fictional).
+Diagnosis: type 2 diabetes mellitus (E11.65), long-term insulin use (Z79.4).
+Insulin glargine 32 units at bedtime daily since 2023.
+Insulin lispro 6-8 units with meals three times daily since 2025-02.
+Checks fingerstick glucose 4 times daily.
+Two overnight episodes of glucose 48 mg/dL and 51 mg/dL in July 2026.
+Spouse assisted during one hypoglycemia episode.
+HbA1c 8.9% on 2026-08-20.
+Today is an in-person visit with the treating endocrinologist to review glycemic control.
+Medications: insulin glargine, insulin lispro, metformin 1000 mg BID, losartan 50 mg daily.
+Exam: BP 128/76, weight 92 kg. Injection sites without lipohypertrophy.
+Demonstrates understanding of insulin dose adjustment.
+Diet: consistent carbohydrate meal plan.
+Assessment: insulin-requiring type 2 diabetes with level 2 hypoglycemia.
+Plan: order a therapeutic continuous glucose monitor (E2103) with sensors (A4239).
+CGM will guide insulin titration and provide nocturnal hypoglycemia alerts.
+Device training scheduled with the diabetes educator.
+Hypoglycemia treatment plan reviewed; glucagon prescribed.
+Follow-up in 6 weeks with CGM data download.
+Electronically signed: Avery Lindqvist, MD (fictional).

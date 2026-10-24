@@ -1,0 +1,21 @@
+SYNTHETIC RECORD - FOR DEMONSTRATION ONLY
+Patient: Bennett Sykes. DOB: 1984-05-05. MRN: SYN-101370.
+Visit date: 2026-09-09. Clinic: Metro Weight Management Center (fictional).
+Age 42.
+Height 178 cm, weight 101.7 kg, BMI 32.1 measured today.
+Highest recorded BMI 33.0 in 2025.
+Comorbidities: hypertension (I10) and prediabetes with HbA1c 6.1%.
+No diagnosis of obstructive sleep apnea; STOP-BANG 2.
+Medically supervised weight program from 2025-11-01 to 2026-08-31 (10 months).
+Monthly visits with the physician and dietitian during the program.
+Weight loss of 4 kg during the program.
+Psychological evaluation 2026-08-15: cleared for bariatric surgery.
+Medications: lisinopril 10 mg daily.
+Exercise: walks 30 minutes 4 days per week.
+Exam: BP 138/86, HR 80.
+Assessment: class I obesity with hypertension.
+Plan: requests laparoscopic sleeve gastrectomy (CPT 43775).
+Discussed that BMI is below typical surgical thresholds.
+Alternative options discussed, including anti-obesity medication.
+Patient strongly prefers surgery.
+Electronically signed: Quinn Halloway, MD (fictional).

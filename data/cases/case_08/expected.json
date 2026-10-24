@@ -1,0 +1,52 @@
+{
+  "title": "Acme Health · Physical therapy extension",
+  "policy_id": "AH-REH-003",
+  "category": "missing",
+  "appealable": false,
+  "denial": {
+    "payer": "Acme Health",
+    "member_id": "AH-27381104",
+    "patient_name": "Owen Brandt",
+    "service": "Physical therapy visit extension",
+    "cpt_or_hcpcs": "97110",
+    "icd10": [
+      "M75.121"
+    ],
+    "denial_reason": "No objective measures of functional progress were submitted.",
+    "denial_date": "2026-09-19",
+    "appeal_deadline": "2026-11-18"
+  },
+  "criteria": [
+    {
+      "section": "2.1",
+      "status": "met",
+      "evidence": [
+        "L5"
+      ]
+    },
+    {
+      "section": "2.2",
+      "status": "unclear",
+      "evidence": [],
+      "accept": [
+        "unclear",
+        "not_met"
+      ]
+    },
+    {
+      "section": "2.3",
+      "status": "met",
+      "evidence": [
+        "L14",
+        "L15"
+      ]
+    },
+    {
+      "section": "2.4",
+      "status": "met",
+      "evidence": [
+        "L17"
+      ]
+    }
+  ]
+}

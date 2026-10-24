@@ -1,0 +1,21 @@
+SYNTHETIC RECORD - FOR DEMONSTRATION ONLY
+Patient: Keisha Montrose. DOB: 1986-01-09. MRN: SYN-100714.
+Visit date: 2026-09-15. Clinic: Riverbend Orthopedics (fictional).
+Right knee pain after a twisting injury playing soccer on 2026-06-30.
+Reports the right knee locks and catches several times per week.
+Episodes of the knee giving way when descending stairs.
+Physical therapy twice weekly from 2026-07-08 to 2026-08-26 (7 weeks).
+Ibuprofen 600 mg three times daily and activity modification during this period.
+Symptoms persisted after completing therapy.
+Exam: medial joint line tenderness and a positive McMurray test on the right.
+Mild effusion; range of motion 0-115 degrees.
+Ligaments stable to varus, valgus, Lachman, and posterior drawer testing.
+MRI right knee 2026-08-30: displaced bucket-handle tear of the medial meniscus.
+Weight-bearing radiographs 2026-07-01: no joint space narrowing; Kellgren-Lawrence grade 1.
+BMI 24.
+No prior knee surgery.
+Work: warehouse supervisor, currently on light duty.
+Assessment: symptomatic medial meniscal tear with mechanical symptoms.
+Plan: right knee arthroscopy with partial medial meniscectomy (CPT 29881).
+Risks, benefits, and alternatives discussed; patient wishes to proceed.
+Electronically signed: Casey Navarro, MD (fictional).

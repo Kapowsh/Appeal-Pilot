@@ -1,0 +1,47 @@
+{
+  "title": "Northwind Care · Continuous glucose monitor",
+  "policy_id": "NWC-DME-305",
+  "category": "supported",
+  "appealable": true,
+  "denial": {
+    "payer": "Northwind Care",
+    "member_id": "NWC-77310256",
+    "patient_name": "Tomas Brightwater",
+    "service": "Continuous glucose monitor",
+    "cpt_or_hcpcs": "E2103",
+    "icd10": [
+      "E11.65",
+      "Z79.4"
+    ],
+    "denial_reason": "Insulin therapy and a recent practitioner evaluation are not documented.",
+    "denial_date": "2026-09-04",
+    "appeal_deadline": "2026-11-03"
+  },
+  "criteria": [
+    {
+      "section": "2.1",
+      "status": "met",
+      "evidence": [
+        "L4"
+      ]
+    },
+    {
+      "section": "2.2",
+      "status": "met",
+      "evidence": [
+        "L5",
+        "L6",
+        "L8",
+        "L12",
+        "L16"
+      ]
+    },
+    {
+      "section": "2.3",
+      "status": "met",
+      "evidence": [
+        "L11"
+      ]
+    }
+  ]
+}

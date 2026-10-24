@@ -1,0 +1,56 @@
+{
+  "title": "Northwind Care · Total hip arthroplasty",
+  "policy_id": "NWC-ORTH-512",
+  "category": "missing",
+  "appealable": false,
+  "denial": {
+    "payer": "Northwind Care",
+    "member_id": "NWC-50827736",
+    "patient_name": "Gloria Featherstone",
+    "service": "Total hip arthroplasty",
+    "cpt_or_hcpcs": "27130",
+    "icd10": [
+      "M16.11"
+    ],
+    "denial_reason": "The type and duration of conservative therapy are not documented.",
+    "denial_date": "2026-09-26",
+    "appeal_deadline": "2026-11-25"
+  },
+  "criteria": [
+    {
+      "section": "2.1",
+      "status": "met",
+      "evidence": [
+        "L10",
+        "L17"
+      ]
+    },
+    {
+      "section": "2.2",
+      "status": "met",
+      "evidence": [
+        "L4",
+        "L5",
+        "L6",
+        "L9",
+        "L16"
+      ]
+    },
+    {
+      "section": "2.3",
+      "status": "unclear",
+      "evidence": [],
+      "accept": [
+        "unclear",
+        "not_met"
+      ]
+    },
+    {
+      "section": "2.4",
+      "status": "met",
+      "evidence": [
+        "L13"
+      ]
+    }
+  ]
+}

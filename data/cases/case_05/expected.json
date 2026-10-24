@@ -1,0 +1,53 @@
+{
+  "title": "Northwind Care · Biologic for rheumatoid arthritis",
+  "policy_id": "NWC-PH-210",
+  "category": "supported",
+  "appealable": true,
+  "denial": {
+    "payer": "Northwind Care",
+    "member_id": "NWC-81442093",
+    "patient_name": "Helena Ostrowski",
+    "service": "Biologic therapy for rheumatoid arthritis",
+    "cpt_or_hcpcs": "J0135",
+    "icd10": [
+      "M05.79"
+    ],
+    "denial_reason": "An adequate trial of methotrexate is not documented.",
+    "denial_date": "2026-09-16",
+    "appeal_deadline": "2026-11-15"
+  },
+  "criteria": [
+    {
+      "section": "2.1",
+      "status": "met",
+      "evidence": [
+        "L5",
+        "L6",
+        "L17"
+      ]
+    },
+    {
+      "section": "2.2",
+      "status": "met",
+      "evidence": [
+        "L7",
+        "L9",
+        "L17"
+      ]
+    },
+    {
+      "section": "2.3",
+      "status": "met",
+      "evidence": [
+        "L11"
+      ]
+    },
+    {
+      "section": "2.4",
+      "status": "met",
+      "evidence": [
+        "L20"
+      ]
+    }
+  ]
+}

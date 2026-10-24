@@ -1,0 +1,26 @@
+SYNTHETIC DOCUMENT - FOR DEMONSTRATION ONLY
+
+Acme Health, Utilization Management, 100 Example Parkway, Springfield (fictional)
+
+NOTICE OF ADVERSE DETERMINATION - PRIOR AUTHORIZATION
+
+Date: September 17, 2026
+Member: Bennett Sykes
+Member ID: AH-71904418
+Requesting provider: Quinn Halloway, MD (fictional)
+Service requested: Bariatric surgery
+Code: CPT 43775
+Diagnosis codes: E66.9, I10
+
+Dear Bennett Sykes,
+
+Acme Health reviewed the prior authorization request for Bariatric surgery under Medical Policy AH-SURG-022. The request is denied.
+
+Reason for denial: The member's BMI does not meet the policy threshold.
+
+This decision is based on section 2.2 of policy AH-SURG-022. A clinician reviewed the records submitted with the request.
+
+Your right to appeal: you or your provider may submit a written appeal within 60 days of this notice. The appeal must be received by November 16, 2026. Your provider may also request a peer-to-peer discussion with our medical director.
+
+Sincerely,
+Medical Director, Acme Health (fictional)

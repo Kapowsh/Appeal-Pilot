@@ -1,0 +1,49 @@
+{
+  "title": "Acme Health · In-lab sleep study",
+  "policy_id": "AH-SLP-007",
+  "category": "supported",
+  "appealable": true,
+  "denial": {
+    "payer": "Acme Health",
+    "member_id": "AH-39017762",
+    "patient_name": "Marcus Delacroix",
+    "service": "Attended polysomnography",
+    "cpt_or_hcpcs": "95810",
+    "icd10": [
+      "G47.33"
+    ],
+    "denial_reason": "A home sleep apnea test is required before attended polysomnography.",
+    "denial_date": "2026-09-11",
+    "appeal_deadline": "2026-11-10"
+  },
+  "criteria": [
+    {
+      "section": "2.1",
+      "status": "met",
+      "evidence": [
+        "L4",
+        "L5",
+        "L6",
+        "L16"
+      ]
+    },
+    {
+      "section": "2.2",
+      "status": "met",
+      "evidence": [
+        "L7",
+        "L8",
+        "L9",
+        "L10",
+        "L17"
+      ]
+    },
+    {
+      "section": "2.3",
+      "status": "met",
+      "evidence": [
+        "L11"
+      ]
+    }
+  ]
+}

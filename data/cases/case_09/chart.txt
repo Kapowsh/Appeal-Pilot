@@ -1,0 +1,21 @@
+SYNTHETIC RECORD - FOR DEMONSTRATION ONLY
+Patient: Gloria Featherstone. DOB: 1955-02-14. MRN: SYN-101269.
+Visit date: 2026-09-18. Clinic: Pinecrest Orthopedic Associates (fictional).
+Right hip pain for several years, progressively worse.
+Pain with walking more than one block and difficulty putting on shoes and socks.
+Uses a cane for community ambulation.
+Has tried physical therapy and naproxen in the past with limited relief; dates not available.
+Received one intra-articular steroid injection; date not recorded.
+Night pain disrupts sleep 3-4 nights per week.
+Radiographs right hip 2026-09-18: severe joint space narrowing, sclerosis, and osteophytes; Kellgren-Lawrence grade 4.
+Exam: antalgic gait, internal rotation 5 degrees, flexion 85 degrees.
+Positive FADIR test on the right.
+BMI 29.4.
+Medical history: hypertension, controlled.
+Medications: amlodipine 5 mg daily, acetaminophen as needed.
+Lives with her daughter; independent with daily activities except lower-body dressing.
+Assessment: end-stage right hip osteoarthritis (M16.11).
+Plan: right total hip arthroplasty (CPT 27130).
+Preoperative medical evaluation requested.
+Risks and benefits reviewed; patient consents to proceed.
+Electronically signed: Jamie Rowan, MD (fictional).

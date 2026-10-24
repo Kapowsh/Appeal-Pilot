@@ -1,0 +1,26 @@
+SYNTHETIC DOCUMENT - FOR DEMONSTRATION ONLY
+
+Northwind Care, Clinical Review Unit, 42 Sample Harbor Road, Fairview (fictional)
+
+NOTICE OF ADVERSE DETERMINATION - PRIOR AUTHORIZATION
+
+Date: September 4, 2026
+Member: Tomas Brightwater
+Member ID: NWC-77310256
+Requesting provider: Avery Lindqvist, MD (fictional)
+Service requested: Continuous glucose monitor
+Code: HCPCS E2103
+Diagnosis codes: E11.65, Z79.4
+
+Dear Tomas Brightwater,
+
+Northwind Care reviewed the prior authorization request for Continuous glucose monitor under Medical Policy NWC-DME-305. The request is denied.
+
+Reason for denial: Insulin therapy and a recent practitioner evaluation are not documented.
+
+This decision is based on section 2.2 of policy NWC-DME-305. A clinician reviewed the records submitted with the request.
+
+Your right to appeal: you or your provider may submit a written appeal within 60 days of this notice. The appeal must be received by November 3, 2026. Your provider may also request a peer-to-peer discussion with our medical director.
+
+Sincerely,
+Medical Director, Northwind Care (fictional)

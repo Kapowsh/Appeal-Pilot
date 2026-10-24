@@ -1,0 +1,52 @@
+{
+  "title": "Acme Health · Bariatric surgery",
+  "policy_id": "AH-SURG-022",
+  "category": "contradicted",
+  "appealable": false,
+  "denial": {
+    "payer": "Acme Health",
+    "member_id": "AH-71904418",
+    "patient_name": "Bennett Sykes",
+    "service": "Bariatric surgery",
+    "cpt_or_hcpcs": "43775",
+    "icd10": [
+      "E66.9",
+      "I10"
+    ],
+    "denial_reason": "The member's BMI does not meet the policy threshold.",
+    "denial_date": "2026-09-17",
+    "appeal_deadline": "2026-11-16"
+  },
+  "criteria": [
+    {
+      "section": "2.1",
+      "status": "met",
+      "evidence": [
+        "L4"
+      ]
+    },
+    {
+      "section": "2.2",
+      "status": "not_met",
+      "evidence": [
+        "L5",
+        "L6"
+      ]
+    },
+    {
+      "section": "2.3",
+      "status": "met",
+      "evidence": [
+        "L9",
+        "L10"
+      ]
+    },
+    {
+      "section": "2.4",
+      "status": "met",
+      "evidence": [
+        "L12"
+      ]
+    }
+  ]
+}

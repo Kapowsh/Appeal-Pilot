@@ -1,0 +1,52 @@
+{
+  "title": "Northwind Care · CT abdomen and pelvis",
+  "policy_id": "NWC-IMG-118",
+  "category": "supported",
+  "appealable": true,
+  "denial": {
+    "payer": "Northwind Care",
+    "member_id": "NWC-62930571",
+    "patient_name": "Lena Haraldsen",
+    "service": "CT abdomen and pelvis",
+    "cpt_or_hcpcs": "74177",
+    "icd10": [
+      "R10.13"
+    ],
+    "denial_reason": "Ultrasound must be performed before CT of the abdomen and pelvis.",
+    "denial_date": "2026-09-25",
+    "appeal_deadline": "2026-11-24"
+  },
+  "criteria": [
+    {
+      "section": "2.1",
+      "status": "met",
+      "evidence": [
+        "L4",
+        "L6"
+      ]
+    },
+    {
+      "section": "2.2",
+      "status": "met",
+      "evidence": [
+        "L8",
+        "L9",
+        "L17"
+      ]
+    },
+    {
+      "section": "2.3",
+      "status": "met",
+      "evidence": [
+        "L10"
+      ]
+    },
+    {
+      "section": "2.4",
+      "status": "met",
+      "evidence": [
+        "L12"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+SYNTHETIC DOCUMENT - FOR DEMONSTRATION ONLY
+
+Northwind Care, Clinical Review Unit, 42 Sample Harbor Road, Fairview (fictional)
+
+NOTICE OF ADVERSE DETERMINATION - PRIOR AUTHORIZATION
+
+Date: September 26, 2026
+Member: Gloria Featherstone
+Member ID: NWC-50827736
+Requesting provider: Jamie Rowan, MD (fictional)
+Service requested: Total hip arthroplasty
+Code: CPT 27130
+Diagnosis codes: M16.11
+
+Dear Gloria Featherstone,
+
+Northwind Care reviewed the prior authorization request for Total hip arthroplasty under Medical Policy NWC-ORTH-512. The request is denied.
+
+Reason for denial: The type and duration of conservative therapy are not documented.
+
+This decision is based on section 2.3 of policy NWC-ORTH-512. A clinician reviewed the records submitted with the request.
+
+Your right to appeal: you or your provider may submit a written appeal within 60 days of this notice. The appeal must be received by November 25, 2026. Your provider may also request a peer-to-peer discussion with our medical director.
+
+Sincerely,
+Medical Director, Northwind Care (fictional)

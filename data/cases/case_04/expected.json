@@ -1,0 +1,53 @@
+{
+  "title": "Acme Health · Knee arthroscopy",
+  "policy_id": "AH-ORTH-031",
+  "category": "supported",
+  "appealable": true,
+  "denial": {
+    "payer": "Acme Health",
+    "member_id": "AH-60218845",
+    "patient_name": "Keisha Montrose",
+    "service": "Knee arthroscopy",
+    "cpt_or_hcpcs": "29881",
+    "icd10": [
+      "S83.241A"
+    ],
+    "denial_reason": "Imaging confirmation of the meniscal tear and the osteoarthritis grade were not provided.",
+    "denial_date": "2026-09-24",
+    "appeal_deadline": "2026-11-23"
+  },
+  "criteria": [
+    {
+      "section": "2.1",
+      "status": "met",
+      "evidence": [
+        "L5",
+        "L6",
+        "L18"
+      ]
+    },
+    {
+      "section": "2.2",
+      "status": "met",
+      "evidence": [
+        "L13"
+      ]
+    },
+    {
+      "section": "2.3",
+      "status": "met",
+      "evidence": [
+        "L7",
+        "L8",
+        "L9"
+      ]
+    },
+    {
+      "section": "2.4",
+      "status": "met",
+      "evidence": [
+        "L14"
+      ]
+    }
+  ]
+}

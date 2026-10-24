@@ -1,0 +1,22 @@
+SYNTHETIC RECORD - FOR DEMONSTRATION ONLY
+Patient: Owen Brandt. DOB: 1970-10-30. MRN: SYN-101158.
+Progress note date: 2026-09-12. Clinic: Summit Physical Therapy (fictional).
+Diagnosis: right rotator cuff tear, after arthroscopic repair on 2026-06-10 (M75.121).
+Visits completed: 11 of 12 authorized.
+Patient states the shoulder feels much better and he sleeps through the night.
+Patient reports he can now reach the top kitchen shelf.
+Pain 3/10 with overhead activity, previously worse.
+Treatment: therapeutic exercise, manual therapy, and neuromuscular re-education.
+Tolerating progression to light resistance bands.
+Home exercise program updated today.
+Standardized outcome measures were not repeated at this visit.
+Range of motion was not measured today.
+Plan of care updated: twice weekly for 6 more weeks, expected discharge 2026-10-24.
+Goal: independent overhead lifting of 10 lb to shelf height by discharge.
+Goal: return to recreational swimming.
+Therapist expects further gains in strength and overhead function with continued skilled care.
+No complications; incision well healed.
+Surgeon follow-up 2026-08-20: repair intact, cleared for strengthening.
+Patient works as an electrician.
+Patient is motivated and adherent with home exercises.
+Electronically signed: Taylor Brooks, PT, DPT (fictional).

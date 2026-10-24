@@ -1,0 +1,56 @@
+{
+  "title": "Acme Health · GLP-1 for type 2 diabetes",
+  "policy_id": "AH-RX-044",
+  "category": "supported",
+  "appealable": true,
+  "denial": {
+    "payer": "Acme Health",
+    "member_id": "AH-55120384",
+    "patient_name": "Priya Halvorsen",
+    "service": "GLP-1 receptor agonist for type 2 diabetes",
+    "cpt_or_hcpcs": "J3490",
+    "icd10": [
+      "E11.65"
+    ],
+    "denial_reason": "Step therapy with metformin for at least 90 days is not documented.",
+    "denial_date": "2026-09-09",
+    "appeal_deadline": "2026-11-08"
+  },
+  "criteria": [
+    {
+      "section": "2.1",
+      "status": "met",
+      "evidence": [
+        "L4",
+        "L5"
+      ]
+    },
+    {
+      "section": "2.2",
+      "status": "met",
+      "evidence": [
+        "L6"
+      ]
+    },
+    {
+      "section": "2.3",
+      "status": "met",
+      "evidence": [
+        "L8",
+        "L9",
+        "L10",
+        "L20"
+      ]
+    },
+    {
+      "section": "2.4",
+      "status": "met",
+      "evidence": [
+        "L11",
+        "L12",
+        "L21",
+        "L22"
+      ]
+    }
+  ]
+}

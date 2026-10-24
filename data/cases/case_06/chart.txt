@@ -1,0 +1,21 @@
+SYNTHETIC RECORD - FOR DEMONSTRATION ONLY
+Patient: Marcus Delacroix. DOB: 1961-12-03. MRN: SYN-100936.
+Visit date: 2026-09-04. Clinic: Cedar Pulmonary and Sleep (fictional).
+Loud snoring and witnessed apneas reported by spouse.
+Epworth Sleepiness Scale 15.
+STOP-BANG score 6.
+Heart failure with reduced ejection fraction; EF 30% on echocardiogram 2026-04.
+Severe COPD with FEV1 38% predicted on 2026-02 spirometry.
+Uses home oxygen 2 L at night.
+Home sleep apnea testing is not appropriate given cardiopulmonary disease and nocturnal oxygen use.
+Face-to-face evaluation today documents daytime sleepiness, morning headaches, and nocturia.
+Medications: carvedilol, sacubitril-valsartan, furosemide, tiotropium.
+BMI 34. Neck circumference 46 cm.
+Exam: Mallampati class IV, bilateral expiratory wheezes, trace ankle edema.
+Social: retired machinist; former smoker, quit 2015.
+Assessment: suspected obstructive sleep apnea with significant cardiopulmonary comorbidity.
+Central sleep apnea is also possible given heart failure.
+Plan: attended in-lab polysomnography (CPT 95810).
+Counseled on drowsy driving.
+Follow-up after the sleep study.
+Electronically signed: Sam Whitaker, MD (fictional).

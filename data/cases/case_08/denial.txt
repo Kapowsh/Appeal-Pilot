@@ -1,0 +1,26 @@
+SYNTHETIC DOCUMENT - FOR DEMONSTRATION ONLY
+
+Acme Health, Utilization Management, 100 Example Parkway, Springfield (fictional)
+
+NOTICE OF ADVERSE DETERMINATION - PRIOR AUTHORIZATION
+
+Date: September 19, 2026
+Member: Owen Brandt
+Member ID: AH-27381104
+Requesting provider: Taylor Brooks, PT, DPT (fictional)
+Service requested: Physical therapy visit extension
+Code: CPT 97110
+Diagnosis codes: M75.121
+
+Dear Owen Brandt,
+
+Acme Health reviewed the prior authorization request for Physical therapy visit extension under Medical Policy AH-REH-003. The request is denied.
+
+Reason for denial: No objective measures of functional progress were submitted.
+
+This decision is based on section 2.2 of policy AH-REH-003. A clinician reviewed the records submitted with the request.
+
+Your right to appeal: you or your provider may submit a written appeal within 60 days of this notice. The appeal must be received by November 18, 2026. Your provider may also request a peer-to-peer discussion with our medical director.
+
+Sincerely,
+Medical Director, Acme Health (fictional)

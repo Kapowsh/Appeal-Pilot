@@ -1,0 +1,21 @@
+SYNTHETIC RECORD - FOR DEMONSTRATION ONLY
+Patient: Lena Haraldsen. DOB: 1983-07-19. MRN: SYN-101047.
+Visit date: 2026-09-22. Clinic: Bayview Urgent and Family Care (fictional).
+Epigastric pain radiating to the back for 5 days, worse after meals.
+Nausea with two episodes of vomiting yesterday.
+Exam: epigastric tenderness with voluntary guarding, no rebound.
+Temperature 38.1 C, HR 104.
+Lipase 612 U/L (reference 13-60) on 2026-09-22.
+WBC 14.2 x10^9/L on 2026-09-22.
+Abdominal ultrasound 2026-09-22: limited by bowel gas; pancreas not visualized.
+No gallstones seen on the limited ultrasound views.
+Creatinine 0.8 mg/dL, eGFR 96 mL/min/1.73m2 on 2026-09-22.
+No history of alcohol use disorder.
+Triglycerides 210 mg/dL.
+No contrast allergy.
+Medications: none daily; occasional acetaminophen.
+Assessment: suspected acute pancreatitis; evaluate for necrosis or other complications.
+Plan: CT abdomen and pelvis with contrast (CPT 74177).
+IV fluids and antiemetics given in clinic.
+Return precautions reviewed.
+Electronically signed: Drew Castellano, MD (fictional).
