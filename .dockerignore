@@ -1,0 +1,8 @@
+.venv
+.git
+.superpowers
+.env
+cache
+tests
+eval/results.md
+**/__pycache__
