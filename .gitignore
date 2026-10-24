@@ -4,3 +4,9 @@
 cache/
 __pycache__/
 *.pyc
+
+# Developer-only files, kept locally but not published
+tests/
+eval/
+scripts/
+data/imr_patterns.md
