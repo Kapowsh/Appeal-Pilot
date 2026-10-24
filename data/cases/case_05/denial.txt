@@ -14,13 +14,17 @@ Diagnosis codes: M05.79
 
 Dear Helena Ostrowski,
 
-Northwind Care reviewed the prior authorization request for Biologic therapy for rheumatoid arthritis under Medical Policy NWC-PH-210. The request is denied.
+Northwind Care reviewed the prior authorization request for Biologic therapy for rheumatoid arthritis under Medical Policy NWC-PH-210. The request is denied because the service is not medically necessary for the member's condition based on the records submitted.
+
+Determination type: Medical necessity
 
 Reason for denial: An adequate trial of methotrexate is not documented.
 
 This decision is based on section 2.3 of policy NWC-PH-210. A clinician reviewed the records submitted with the request.
 
 Your right to appeal: you or your provider may submit a written appeal within 60 days of this notice. The appeal must be received by November 15, 2026. Your provider may also request a peer-to-peer discussion with our medical director.
+
+Independent external review: if the denial is upheld on appeal, or if we do not decide the appeal in time, you may ask for an independent external review by a clinical reviewer who is not part of Northwind Care.
 
 Sincerely,
 Medical Director, Northwind Care (fictional)

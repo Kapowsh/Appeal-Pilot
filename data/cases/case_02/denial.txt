@@ -14,13 +14,17 @@ Diagnosis codes: E11.65
 
 Dear Priya Halvorsen,
 
-Acme Health reviewed the prior authorization request for GLP-1 receptor agonist for type 2 diabetes under Medical Policy AH-RX-044. The request is denied.
+Acme Health reviewed the prior authorization request for GLP-1 receptor agonist for type 2 diabetes under Medical Policy AH-RX-044. The request is denied because the service is not medically necessary for the member's condition based on the records submitted.
+
+Determination type: Medical necessity
 
 Reason for denial: Step therapy with metformin for at least 90 days is not documented.
 
 This decision is based on section 2.3 of policy AH-RX-044. A clinician reviewed the records submitted with the request.
 
 Your right to appeal: you or your provider may submit a written appeal within 60 days of this notice. The appeal must be received by November 8, 2026. Your provider may also request a peer-to-peer discussion with our medical director.
+
+Independent external review: if the denial is upheld on appeal, or if we do not decide the appeal in time, you may ask for an independent external review by a clinical reviewer who is not part of Acme Health.
 
 Sincerely,
 Medical Director, Acme Health (fictional)

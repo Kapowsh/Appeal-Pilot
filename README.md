@@ -89,6 +89,12 @@ The payers ("Acme Health", "Northwind Care") are fictional, but each of their 15
 
 The 10 bundled cases (denial letters and chart notes) remain fully synthetic. Each case is written against its adapted policy, so the answer key in `expected.json` reflects the real-world criteria.
 
+## Denial realism
+
+The 10 sample denials are synthetic, but they follow the patterns in real, de-identified [California DMHC Independent Medical Review decisions](https://data.ca.gov/dataset/independent-medical-review-imr-determinations-trend), which are public data. Real plans almost always say a denied service is "not medically necessary" and then name the specific criterion that wasn't met. About 70% of IMR decisions are medical-necessity disputes. The sample letters do the same, and they also tell the member about the right to independent external review.
+
+[`data/imr_patterns.md`](data/imr_patterns.md) lists, for each service in this app, how many real IMR decisions match it, how often the plan's denial was overturned, and the most common review themes. Examples: conservative therapy for lumbar MRI, BMI for bariatric surgery, insulin use for CGM, and step therapy for biologics. To regenerate it from the dataset's CSV, run `uv run python scripts/imr_patterns.py imr.csv > data/imr_patterns.md`. The committed copy was built from a mirror of the dataset covering 2001–2016, and services are matched by keyword, so the counts are approximate. No IMR text is bundled in this repo.
+
 ## Setup
 
 1. Install [uv](https://docs.astral.sh/uv/), then run `uv sync`. This uses Python 3.11.
