@@ -1,0 +1,30 @@
+[project]
+name = "appeal-pilot"
+version = "0.1.0"
+description = "Drafts cited prior-authorization appeal letters with NVIDIA Nemotron on Nebius Token Factory."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.11,<3.12"
+dependencies = [
+    "fastapi",
+    "uvicorn[standard]",
+    "pydantic>=2",
+    "pydantic-settings",
+    "openai",
+    "pypdf",
+    "numpy",
+    "rank-bm25",
+    "tavily-python",
+    "python-multipart",
+]
+
+[dependency-groups]
+dev = ["pytest", "pytest-asyncio", "httpx", "reportlab"]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+asyncio_mode = "auto"
+testpaths = ["tests"]
