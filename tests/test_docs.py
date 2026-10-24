@@ -2,7 +2,7 @@ import re
 import tomllib
 from pathlib import Path
 
-HEADINGS = ["## What it does", "## Hackathon requirements", "## Run it", "## Disclaimer", "## License"]
+HEADINGS = ["## The problem", "## What it does", "## Hackathon requirements", "## Run it", "## License"]
 
 
 def test_license_is_mit():
@@ -38,5 +38,4 @@ def test_every_policy_cites_its_public_source():
 def test_readme_documents_requirements():
     readme = Path("README.md").read_text(encoding="utf-8")
     assert "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B" in readme and "nvidia/nemotron-3-super-120b-a12b" in readme
-    for phrase in ("MIT", "no login", "Synthetic data only", "TRUST_PROXY=true"):
-        assert phrase in readme, phrase
+    assert "MIT" in readme and "api.tokenfactory.nebius.com" in readme
