@@ -42,3 +42,10 @@ def test_corpus_shape():
     assert len({d.policy_id for d in docs}) == 15
     for d in docs:
         assert len(criteria_lines(d.body)) >= 3, d.filename
+
+
+def test_every_policy_cites_a_public_source():
+    for d in load_policies(Path("data/policies")):
+        assert d.source, d.filename
+        assert d.source_url.startswith("https://"), d.filename
+        assert "Adapted from" in d.body, d.filename

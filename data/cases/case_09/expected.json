@@ -21,14 +21,6 @@
       "section": "2.1",
       "status": "met",
       "evidence": [
-        "L10",
-        "L17"
-      ]
-    },
-    {
-      "section": "2.2",
-      "status": "met",
-      "evidence": [
         "L4",
         "L5",
         "L6",
@@ -37,19 +29,27 @@
       ]
     },
     {
+      "section": "2.2",
+      "status": "met",
+      "evidence": [
+        "L11"
+      ]
+    },
+    {
       "section": "2.3",
+      "status": "met",
+      "evidence": [
+        "L10",
+        "L17"
+      ]
+    },
+    {
+      "section": "2.4",
       "status": "unclear",
       "evidence": [],
       "accept": [
         "unclear",
         "not_met"
-      ]
-    },
-    {
-      "section": "2.4",
-      "status": "met",
-      "evidence": [
-        "L13"
       ]
     }
   ]

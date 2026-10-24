@@ -1,10 +1,10 @@
 SYNTHETIC RECORD - FOR DEMONSTRATION ONLY
 Patient: Keisha Montrose. DOB: 1986-01-09. MRN: SYN-100714.
 Visit date: 2026-09-15. Clinic: Riverbend Orthopedics (fictional).
-Right knee pain after a twisting injury playing soccer on 2026-06-30.
+Significant right knee pain, 6/10, after a twisting injury playing soccer on 2026-06-30.
 Reports the right knee locks and catches several times per week.
 Episodes of the knee giving way when descending stairs.
-Physical therapy twice weekly from 2026-07-08 to 2026-08-26 (7 weeks).
+Formal in-person physical therapy twice weekly from 2026-07-08 to 2026-08-26 (7 weeks); PT notes attached.
 Ibuprofen 600 mg three times daily and activity modification during this period.
 Symptoms persisted after completing therapy.
 Exam: medial joint line tenderness and a positive McMurray test on the right.

@@ -15,8 +15,9 @@ Demonstrates understanding of insulin dose adjustment.
 Diet: consistent carbohydrate meal plan.
 Assessment: insulin-requiring type 2 diabetes with level 2 hypoglycemia.
 Plan: order a therapeutic continuous glucose monitor (E2103) with sensors (A4239).
+CGM prescribed for use according to its FDA-cleared indications, to improve glycemic control.
 CGM will guide insulin titration and provide nocturnal hypoglycemia alerts.
-Device training scheduled with the diabetes educator.
+Patient completed CGM device training with the diabetes educator today; I judge the training sufficient.
 Hypoglycemia treatment plan reviewed; glucagon prescribed.
 Follow-up in 6 weeks with CGM data download.
 Electronically signed: Avery Lindqvist, MD (fictional).

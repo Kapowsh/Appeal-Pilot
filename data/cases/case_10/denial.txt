@@ -18,7 +18,7 @@ Acme Health reviewed the prior authorization request for Bariatric surgery under
 
 Reason for denial: The member's BMI does not meet the policy threshold.
 
-This decision is based on section 2.2 of policy AH-SURG-022. A clinician reviewed the records submitted with the request.
+This decision is based on section 2.1 of policy AH-SURG-022. A clinician reviewed the records submitted with the request.
 
 Your right to appeal: you or your provider may submit a written appeal within 60 days of this notice. The appeal must be received by November 16, 2026. Your provider may also request a peer-to-peer discussion with our medical director.
 

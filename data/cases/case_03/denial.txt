@@ -18,7 +18,7 @@ Northwind Care reviewed the prior authorization request for Continuous glucose m
 
 Reason for denial: Insulin therapy and a recent practitioner evaluation are not documented.
 
-This decision is based on section 2.2 of policy NWC-DME-305. A clinician reviewed the records submitted with the request.
+This decision is based on section 2.4 of policy NWC-DME-305. A clinician reviewed the records submitted with the request.
 
 Your right to appeal: you or your provider may submit a written appeal within 60 days of this notice. The appeal must be received by November 3, 2026. Your provider may also request a peer-to-peer discussion with our medical director.
 

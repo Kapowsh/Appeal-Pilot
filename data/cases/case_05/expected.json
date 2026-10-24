@@ -21,32 +21,39 @@
       "section": "2.1",
       "status": "met",
       "evidence": [
-        "L5",
         "L6",
-        "L17"
+        "L7",
+        "L18"
       ]
     },
     {
       "section": "2.2",
       "status": "met",
       "evidence": [
-        "L7",
-        "L9",
-        "L17"
+        "L5"
       ]
     },
     {
       "section": "2.3",
       "status": "met",
       "evidence": [
-        "L11"
+        "L8",
+        "L10",
+        "L18"
       ]
     },
     {
       "section": "2.4",
       "status": "met",
       "evidence": [
-        "L20"
+        "L21"
+      ]
+    },
+    {
+      "section": "2.5",
+      "status": "met",
+      "evidence": [
+        "L12"
       ]
     }
   ]

@@ -18,7 +18,7 @@ Acme Health reviewed the prior authorization request for MRI lumbar spine under 
 
 Reason for denial: Documentation does not show failure of at least 6 weeks of conservative therapy.
 
-This decision is based on section 2.2 of policy AH-RAD-012. A clinician reviewed the records submitted with the request.
+This decision is based on section 2.3 of policy AH-RAD-012. A clinician reviewed the records submitted with the request.
 
 Your right to appeal: you or your provider may submit a written appeal within 60 days of this notice. The appeal must be received by November 17, 2026. Your provider may also request a peer-to-peer discussion with our medical director.
 

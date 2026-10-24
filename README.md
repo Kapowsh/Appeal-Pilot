@@ -65,6 +65,30 @@ flowchart LR
 
 TODO: run `uv run python eval/run_eval.py` with Token Factory credentials, then paste `eval/results.md` here.
 
+## Policy sources
+
+The payers ("Acme Health", "Northwind Care") are fictional, but each of their 15 coverage policies is adapted from a real, publicly available policy: Medicare coverage determinations (CMS), published commercial medical policies, a state Medicaid pharmacy criteria document, and ACR imaging guidance. The criteria thresholds (durations, scores, lab values, BMI) come from those documents. The wording is paraphrased and simplified, and some alternative pathways are moved to the Exceptions section. These files are **not** the current coverage policy of any real payer. Check the source before relying on a criterion.
+
+| Policy | Fictional payer | Service | Adapted from |
+|---|---|---|---|
+| `AH-SURG-022` | Acme Health | Bariatric surgery | [CMS National Coverage Determination 100.1, Bariatric Surgery for Treatment of Co-Morbid Conditions Related to Morbid Obesity](https://www.cms.gov/medicare-coverage-database/view/ncd.aspx?ncdid=57) |
+| `AH-RX-051` | Acme Health | Biologic therapy for plaque psoriasis | [Aetna Clinical Policy Bulletin 0655, Adalimumab, plaque psoriasis](https://www.aetna.com/cpb/medical/data/600_699/0655.html) |
+| `AH-DME-019` | Acme Health | Continuous glucose monitor | [CMS Local Coverage Determination L33822, Glucose Monitors (rev. 10/01/2024)](https://www.cms.gov/medicare-coverage-database/view/lcd.aspx?lcdid=33822) |
+| `AH-RX-044` | Acme Health | GLP-1 receptor agonist for type 2 diabetes | [OptumRx criteria for Indiana Medicaid, GLP-1 Receptor Agonists and Combinations (07.01.2026), preferred agents (Ozempic)](https://contenthub-aem.optumrx.com/content/dam/contenthub/retail-pharmacy-override/assets/customsite-indiana/documents/quicklinks/20260701_Public-Facing_GLP-1%20RA-GIP-Combinations_PA_Final.pdf) |
+| `AH-ORTH-031` | Acme Health | Knee arthroscopy | [Aetna Clinical Policy Bulletin 0673, Knee Arthroscopy / Osteoarthritis of the Knee](https://www.aetna.com/cpb/medical/data/600_699/0673.html) |
+| `AH-RAD-012` | Acme Health | MRI lumbar spine | [BlueCross BlueShield of South Carolina Medical Policy CAM 709, MRI Lumbar Spine](https://medicalpolicy.southcarolinablues.com/web/public/brands/medicalpolicy/external/external-policies/mri-lumbar-spine) |
+| `AH-REH-003` | Acme Health | Physical therapy visit extension | [CMS Medicare Benefit Policy Manual, Chapter 15, Section 220.3, as summarized in MLN905365, Complying with Outpatient Rehabilitation Therapy Documentation Requirements](https://www.cms.gov/files/document/mln905365-complying-outpatient-rehabilitation-therapy-documentation-requirements.pdf) |
+| `AH-SLP-007` | Acme Health | Attended polysomnography | [Aetna Clinical Policy Bulletin 0004, Obstructive Sleep Apnea in Adults, section I.A.1](https://www.aetna.com/cpb/medical/data/1_99/0004.html) |
+| `NWC-PH-210` | Northwind Care | Biologic therapy for rheumatoid arthritis | [Aetna Clinical Policy Bulletin 0655, Adalimumab, rheumatoid arthritis](https://www.aetna.com/cpb/medical/data/600_699/0655.html) |
+| `NWC-DME-305` | Northwind Care | Continuous glucose monitor | [CMS Local Coverage Determination L33822, Glucose Monitors (rev. 10/01/2024)](https://www.cms.gov/medicare-coverage-database/view/lcd.aspx?lcdid=33822) |
+| `NWC-IMG-118` | Northwind Care | CT abdomen and pelvis | [ACR Appropriateness Criteria, Acute Pancreatitis; ACR-NKF consensus statement on intravenous iodinated contrast in kidney disease (Radiology, 2020)](https://acsearch.acr.org/docs/69468/Narrative/) |
+| `NWC-RX-220` | Northwind Care | GLP-1 receptor agonist for type 2 diabetes | [OptumRx criteria for Indiana Medicaid, GLP-1 Receptor Agonists and Combinations (07.01.2026), non-preferred agents (Mounjaro)](https://contenthub-aem.optumrx.com/content/dam/contenthub/retail-pharmacy-override/assets/customsite-indiana/documents/quicklinks/20260701_Public-Facing_GLP-1%20RA-GIP-Combinations_PA_Final.pdf) |
+| `NWC-ORTH-512` | Northwind Care | Total hip arthroplasty | [Aetna Clinical Policy Bulletin 0287, Hip Arthroplasty](https://www.aetna.com/cpb/medical/data/200_299/0287.html) |
+| `NWC-IMG-104` | Northwind Care | MRI lumbar spine | [Molina Clinical Policy, Lumbar Spine MRI](https://www.molinahealthcare.com/providers/tx/PDF/Marketplace/Policy/LumbarSpineMRI.pdf) |
+| `NWC-SLP-401` | Northwind Care | Home sleep apnea test | [Aetna Clinical Policy Bulletin 0004, Obstructive Sleep Apnea in Adults, section I.A.2](https://www.aetna.com/cpb/medical/data/1_99/0004.html) |
+
+The 10 bundled cases (denial letters and chart notes) remain fully synthetic. Each case is written against its adapted policy, so the answer key in `expected.json` reflects the real-world criteria.
+
 ## Setup
 
 1. Install [uv](https://docs.astral.sh/uv/), then run `uv sync`. This uses Python 3.11.
@@ -82,7 +106,7 @@ Hosted demo: TODO (deployment URL).
 
 ## Disclaimer
 
-All patients, members, clinicians, payers ("Acme Health", "Northwind Care") and policies in this repository are **fictional**, and all data is **synthetic**. Appeal-Pilot is a drafting aid. It is **not medical advice** and does not make coverage determinations. A licensed clinician must review, edit and sign off on every letter before use. The app never sends anything.
+All patients, members, clinicians and payers ("Acme Health", "Northwind Care") in this repository are **fictional**, and all case data is **synthetic**. The coverage policies are simplified adaptations of public policies (see [Policy sources](#policy-sources)), not any payer's current coverage rules. Appeal-Pilot is a drafting aid. It is **not medical advice** and does not make coverage determinations. A licensed clinician must review, edit and sign off on every letter before use. The app never sends anything.
 
 ## License
 

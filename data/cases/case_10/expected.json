@@ -20,13 +20,6 @@
   "criteria": [
     {
       "section": "2.1",
-      "status": "met",
-      "evidence": [
-        "L4"
-      ]
-    },
-    {
-      "section": "2.2",
       "status": "not_met",
       "evidence": [
         "L5",
@@ -34,18 +27,19 @@
       ]
     },
     {
+      "section": "2.2",
+      "status": "met",
+      "evidence": [
+        "L7"
+      ]
+    },
+    {
       "section": "2.3",
       "status": "met",
       "evidence": [
         "L9",
-        "L10"
-      ]
-    },
-    {
-      "section": "2.4",
-      "status": "met",
-      "evidence": [
-        "L12"
+        "L10",
+        "L11"
       ]
     }
   ]

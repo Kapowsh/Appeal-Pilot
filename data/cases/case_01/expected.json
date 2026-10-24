@@ -22,7 +22,12 @@
       "status": "met",
       "evidence": [
         "L4",
-        "L5"
+        "L7",
+        "L13",
+        "L14",
+        "L15",
+        "L16",
+        "L18"
       ]
     },
     {
@@ -30,26 +35,15 @@
       "status": "met",
       "evidence": [
         "L8",
-        "L9",
-        "L10",
-        "L19"
+        "L9"
       ]
     },
     {
       "section": "2.3",
       "status": "met",
       "evidence": [
-        "L13",
-        "L14",
-        "L15",
-        "L16"
-      ]
-    },
-    {
-      "section": "2.4",
-      "status": "met",
-      "evidence": [
-        "L21"
+        "L10",
+        "L19"
       ]
     }
   ]

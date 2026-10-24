@@ -21,6 +21,7 @@
       "section": "2.1",
       "status": "met",
       "evidence": [
+        "L4",
         "L5",
         "L6",
         "L18"
@@ -37,9 +38,7 @@
       "section": "2.3",
       "status": "met",
       "evidence": [
-        "L7",
-        "L8",
-        "L9"
+        "L7"
       ]
     },
     {

@@ -18,7 +18,7 @@ Acme Health reviewed the prior authorization request for Attended polysomnograph
 
 Reason for denial: A home sleep apnea test is required before attended polysomnography.
 
-This decision is based on section 2.2 of policy AH-SLP-007. A clinician reviewed the records submitted with the request.
+This decision is based on section 2.3 of policy AH-SLP-007. A clinician reviewed the records submitted with the request.
 
 Your right to appeal: you or your provider may submit a written appeal within 60 days of this notice. The appeal must be received by November 10, 2026. Your provider may also request a peer-to-peer discussion with our medical director.
 

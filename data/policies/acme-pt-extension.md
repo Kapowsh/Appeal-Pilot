@@ -3,25 +3,27 @@ policy_id: AH-REH-003
 payer: Acme Health
 service: Physical therapy visit extension
 codes: 97110, 97140, 97530
+source: CMS Medicare Benefit Policy Manual, Chapter 15, Section 220.3, as summarized in MLN905365, Complying with Outpatient Rehabilitation Therapy Documentation Requirements
+source_url: https://www.cms.gov/files/document/mln905365-complying-outpatient-rehabilitation-therapy-documentation-requirements.pdf
 ---
-# Acme Health Medical Policy AH-REH-003: Outpatient Physical Therapy: Additional Visits
+# Acme Health Medical Policy AH-REH-003: Outpatient Physical Therapy: Continued Care
 
-Fictional policy for a synthetic-data demo. Not a real payer's coverage policy.
+Fictional policy for a synthetic-data demo. Adapted from CMS Medicare Benefit Policy Manual, Chapter 15, Section 220.3, as summarized in MLN905365, Complying with Outpatient Rehabilitation Therapy Documentation Requirements (https://www.cms.gov/files/document/mln905365-complying-outpatient-rehabilitation-therapy-documentation-requirements.pdf). The criteria are paraphrased and simplified; this is not the current coverage policy of any real payer.
 
 ## 1. Scope
-This policy applies to requests for outpatient physical therapy visits beyond the initial authorization of 12 visits.
+This policy applies to requests to continue outpatient physical therapy beyond the current authorization.
 
 ## 2. Coverage Criteria
 Physical therapy visit extension is considered medically necessary when ALL of the following criteria are met:
 
-2.1 The initially authorized 12 visits have been completed or nearly completed.
-2.2 Documented objective functional improvement since the start of care, measured with a standardized tool such as the Oswestry Disability Index, LEFS, DASH, or range of motion in degrees.
-2.3 An updated plan of care with specific, measurable goals and an expected discharge date.
-2.4 Additional visits are expected to produce further measurable functional gains rather than maintenance.
+2.1 A progress report written by the qualified therapist at least once every 10 treatment days.
+2.2 An objective functional assessment showing the member's response to therapy, using standardized measures or measured findings such as range of motion in degrees.
+2.3 Updated short- or long-term goals and a plan for continued or revised treatment.
+2.4 The member's condition has the potential to improve, or is improving, in response to therapy (rehabilitative care rather than maintenance).
 
-## 3. Exclusions
-3.1 Maintenance therapy once the member has plateaued.
-3.2 Requests supported only by subjective reports of improvement.
+## 3. Exclusions and Exceptions
+3.1 Maintenance therapy to keep the member's current function from declining is reviewed under a separate standard.
+3.2 Reports written by an assistant do not count as the therapist's progress report.
 
 ## 4. Documentation Requirements
-4.1 Initial and current standardized outcome scores with dates, the updated plan of care, and visit count.
+4.1 The progress report with dates of the reporting period, objective measures at the start of care and now, and the updated plan of care.

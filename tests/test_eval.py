@@ -76,12 +76,12 @@ async def test_run_case_end_to_end_offline():
     llm = ScriptedLLM({
         Denial: denial(),
         CriteriaList: CriteriaList(criteria=[Criterion(id="x", text="a", source_doc="AH-RAD-012", source_section="2.1")]),
-        MatchList: MatchList(matches=[CriterionMatch(criterion_id="C1", status="met", evidence_line_ids=["L5"], rationale="")]),
-        AppealDraft: AppealDraft(sentences=[LetterSentence(id="a", text="Pain has persisted for 7 weeks.", cites=["L5"])]),
+        MatchList: MatchList(matches=[CriterionMatch(criterion_id="C1", status="met", evidence_line_ids=["L4"], rationale="")]),
+        AppealDraft: AppealDraft(sentences=[LetterSentence(id="a", text="Low back pain radiates down the left leg.", cites=["L4"])]),
         Review: Review(flags=[], summary="ok"),
     })
     s = Settings(_env_file=None, model_fast="f", model_reason="r")
     row = await run_case(Path("data/cases/case_01"), s, llm, PolicyIndex.build(s, None))
     assert row["case"] == "case_01" and "error" not in row
-    assert row["status_acc"] == 0.25 and row["evidence_precision"] == 1.0
+    assert row["status_acc"] == 1 / 3 and row["evidence_precision"] == 1.0
     assert row["citation_validity"] == 1.0 and row["catch_rate"] == 0.5

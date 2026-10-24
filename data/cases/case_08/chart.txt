@@ -2,7 +2,7 @@ SYNTHETIC RECORD - FOR DEMONSTRATION ONLY
 Patient: Owen Brandt. DOB: 1970-10-30. MRN: SYN-101158.
 Progress note date: 2026-09-12. Clinic: Summit Physical Therapy (fictional).
 Diagnosis: right rotator cuff tear, after arthroscopic repair on 2026-06-10 (M75.121).
-Visits completed: 11 of 12 authorized.
+Progress report by the treating physical therapist covering treatment days 2 through 11 (10 treatment days).
 Patient states the shoulder feels much better and he sleeps through the night.
 Patient reports he can now reach the top kitchen shelf.
 Pain 3/10 with overhead activity, previously worse.

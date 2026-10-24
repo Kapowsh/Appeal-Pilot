@@ -1,5 +1,5 @@
 SYNTHETIC RECORD - FOR DEMONSTRATION ONLY
-Patient: Priya Halvorsen. DOB: 1968-11-02. MRN: SYN-100522.
+Patient: Priya Halvorsen. DOB: 1968-11-02 (age 57). MRN: SYN-100522.
 Visit date: 2026-09-02. Clinic: Harbor Internal Medicine (fictional).
 Problem list: type 2 diabetes mellitus with hyperglycemia (E11.65), hypertension, hyperlipidemia.
 Type 2 diabetes diagnosed in 2019.

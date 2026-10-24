@@ -1,7 +1,8 @@
 SYNTHETIC RECORD - FOR DEMONSTRATION ONLY
 Patient: Helena Ostrowski. DOB: 1974-04-28. MRN: SYN-100825.
 Visit date: 2026-09-08. Clinic: Westfield Rheumatology (fictional).
-Seropositive rheumatoid arthritis diagnosed 2025-01 (M05.79).
+Rheumatoid arthritis diagnosed 2025-01 (M05.79).
+Rheumatoid factor positive and anti-CCP positive on 2025-01-10.
 CDAI today 24, consistent with high disease activity.
 Swollen joint count 8; tender joint count 10.
 Methotrexate 20 mg weekly by mouth from 2025-02 to present, more than 18 months.
@@ -14,7 +15,7 @@ ESR 42 mm/hr, CRP 2.8 mg/dL.
 Hand radiographs show periarticular erosions at the right second MCP.
 Exam: synovitis of both wrists and MCP joints 2-3.
 Morning stiffness lasts 2 hours.
-Assessment: moderate-to-severe RA with inadequate response to methotrexate.
+Assessment: moderate-to-severe RA, not at low disease activity despite methotrexate.
 Plan: add adalimumab 40 mg subcutaneously every 2 weeks; continue methotrexate.
 Vaccinations reviewed; pneumococcal vaccine given today.
 Prescriber: Riley Okafor, MD, board-certified rheumatologist (fictional).

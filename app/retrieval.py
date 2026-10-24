@@ -25,6 +25,8 @@ class PolicyDoc:
     title: str
     body: str
     filename: str
+    source: str = ""  # the public policy this fictional one is adapted from
+    source_url: str = ""
 
 
 def parse_policy(text: str, filename: str) -> PolicyDoc:
@@ -48,6 +50,7 @@ def parse_policy(text: str, filename: str) -> PolicyDoc:
         policy_id=meta["policy_id"], payer=meta["payer"], service=meta["service"],
         codes=[c.strip() for c in meta["codes"].split(",") if c.strip()],
         title=title, body=body.strip(), filename=filename,
+        source=meta.get("source", ""), source_url=meta.get("source_url", ""),
     )
 
 
