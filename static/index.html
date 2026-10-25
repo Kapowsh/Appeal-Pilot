@@ -4,164 +4,245 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Appeal-Pilot</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
 <style>
   :root {
-    --accent: #2f6fde;
-    --accent-soft: #e8f0fd;
-    --text: #1d2330;
-    --muted: #5d6677;
-    --border: #d9dee7;
-    --bg: #f6f7f9;
-    --card: #ffffff;
-    --ok: #1d7a46;
-    --ok-bg: #e5f4ea;
-    --bad: #b42318;
-    --bad-bg: #fdecea;
-    --warn: #8a5a00;
-    --warn-bg: #fdf3dc;
-    --hl: #fff3b0;
+    color-scheme: light;
+    --desk: #e4eaee;
+    --desk-deep: #d3dce2;
+    --ink: #18303f;
+    --ink-soft: #4d6270;
+    --rule: #c3ced6;
+    --paper: #ffffff;
+    --highlight: #eaf4a0;
+    --action: #1d4f91;
+    --action-deep: #163d70;
+    --met: #1f7a5f;
+    --met-bg: #e2f1ea;
+    --not-met: #9a2b2b;
+    --not-met-bg: #f7e6e4;
+    --unclear: #9c6410;
+    --unclear-bg: #f8eedb;
+    --sans: "Public Sans", "Segoe UI", system-ui, sans-serif;
+    --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
   }
   * { box-sizing: border-box; }
-  body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-         color: var(--text); background: var(--bg); line-height: 1.45; font-size: 15px; }
-  main { max-width: 1200px; margin: 0 auto; padding: 0 16px 48px; }
-  #banner { background: var(--warn-bg); color: var(--warn); border-bottom: 1px solid #f0d9a6; padding: 8px 16px;
-            text-align: center; font-weight: 600; font-size: 14px; }
-  header { display: flex; align-items: baseline; gap: 12px; padding: 20px 0 8px; }
-  header h1 { margin: 0; font-size: 22px; }
-  header p { margin: 0; color: var(--muted); }
-  section.card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin-top: 16px; }
-  h2 { font-size: 16px; margin: 0 0 12px; }
-  .row { display: flex; flex-wrap: wrap; gap: 12px; align-items: end; }
-  label { display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: var(--muted); }
-  select, input[type=file] { font: inherit; padding: 6px; border: 1px solid var(--border); border-radius: 6px; background: #fff; }
-  button { font: inherit; padding: 8px 16px; border-radius: 6px; border: 1px solid var(--accent); background: var(--accent);
-           color: #fff; cursor: pointer; }
-  button.secondary { background: #fff; color: var(--accent); }
-  button:disabled { opacity: .45; cursor: not-allowed; }
-  button.small { padding: 2px 10px; font-size: 13px; }
-  .or { color: var(--muted); padding-bottom: 8px; }
-  #msg { margin-top: 10px; color: var(--muted); min-height: 1.4em; }
-  #msg.error { color: var(--bad); }
-  #step-tracker { display: flex; list-style: none; padding: 0; margin: 0; gap: 8px; flex-wrap: wrap; }
-  #step-tracker li { flex: 1; min-width: 110px; padding: 8px 10px; border: 1px solid var(--border); border-radius: 6px;
-                     color: var(--muted); background: #fff; font-size: 14px; }
-  #step-tracker li::before { content: "○ "; }
-  #step-tracker li.running { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
-  #step-tracker li.running::before { content: "◔ "; }
-  #step-tracker li.done { color: var(--ok); border-color: #b9dfc6; }
-  #step-tracker li.done::before { content: "● "; }
-  #step-tracker li.error { color: var(--bad); border-color: #f1b8b2; background: var(--bad-bg); }
-  #step-tracker li.error::before { content: "✕ "; }
-  dl#denial-card { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px 16px; margin: 0; }
-  dl#denial-card div { min-width: 0; }
-  dt { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .03em; }
-  dd { margin: 0; overflow-wrap: anywhere; }
-  .deadline dd { background: var(--hl); display: inline-block; padding: 0 6px; border-radius: 4px; font-weight: 600; }
-  .grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 16px; }
-  @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+  body { margin: 0; font: 15px/1.5 var(--sans); color: var(--ink); background: var(--desk);
+         font-variant-numeric: tabular-nums; }
+  button, select, input { font: inherit; color: inherit; }
+  :focus-visible { outline: 3px solid var(--action); outline-offset: 2px; }
+
+  #banner { background: var(--ink); color: #dce6ec; font-size: 13px; padding: 6px 16px; text-align: center; }
+
+  /* Header: brand, case input, pipeline line */
+  .masthead { background: var(--paper); border-bottom: 1px solid var(--rule); }
+  .masthead-inner { max-width: 1320px; margin: 0 auto; padding: 18px 24px 0; }
+  .intake-bar { display: flex; flex-wrap: wrap; align-items: end; gap: 12px 20px; }
+  .brand { margin-right: auto; }
+  .case-picker { display: flex; flex-wrap: wrap; align-items: end; gap: 12px 16px; }
+  .brand h1 { margin: 0; font-size: 22px; font-weight: 700; letter-spacing: -0.01em; }
+  .brand p { margin: 2px 0 0; color: var(--ink-soft); font-size: 14px; }
+  .field { display: flex; flex-direction: column; gap: 4px; font-size: 13px; font-weight: 500; color: var(--ink-soft); }
+  select, input[type=file] { padding: 7px 8px; border: 1px solid var(--rule); border-radius: 4px; background: var(--paper);
+                             font-size: 14px; max-width: 230px; }
+  input[type=file]::file-selector-button { font: inherit; border: 1px solid var(--rule); border-radius: 3px;
+                                           background: var(--desk); color: var(--ink); padding: 2px 8px; margin-right: 8px; cursor: pointer; }
+  .or { color: var(--ink-soft); font-size: 14px; padding-bottom: 8px; }
+  button { cursor: pointer; border-radius: 4px; padding: 9px 18px; font-weight: 600; border: 1px solid var(--action);
+           background: var(--action); color: #fff; }
+  button:hover:not(:disabled) { background: var(--action-deep); border-color: var(--action-deep); }
+  button.quiet { background: var(--paper); color: var(--action); }
+  button.quiet:hover:not(:disabled) { background: var(--desk); color: var(--action-deep); }
+  button:disabled { opacity: .4; cursor: not-allowed; }
+  #msg { min-height: 1.5em; margin: 10px 0 0; font-size: 14px; color: var(--ink-soft); }
+  #msg.error { color: var(--not-met); font-weight: 500; }
+
+  /* Pipeline: one line, five stops */
+  #step-tracker { list-style: none; display: flex; margin: 14px 0 0; padding: 0 0 16px; counter-reset: step; }
+  #step-tracker li { flex: 1; position: relative; padding-top: 18px; font-size: 13px; color: var(--ink-soft); counter-increment: step; }
+  #step-tracker li::before { content: ""; position: absolute; top: 4px; left: 0; width: 10px; height: 10px; border-radius: 50%;
+                             border: 2px solid var(--rule); background: var(--paper); z-index: 1; }
+  #step-tracker li::after { content: ""; position: absolute; top: 8px; left: 12px; right: 4px; height: 2px; background: var(--rule); }
+  #step-tracker li:last-child::after { display: none; }
+  #step-tracker li.running { color: var(--action); font-weight: 600; }
+  #step-tracker li.running::before { border-color: var(--action); background: var(--action); animation: pulse 1.2s ease-in-out infinite; }
+  #step-tracker li.done { color: var(--ink); }
+  #step-tracker li.done::before { border-color: var(--ink); background: var(--ink); }
+  #step-tracker li.done::after { background: var(--ink); }
+  #step-tracker li.error { color: var(--not-met); font-weight: 600; }
+  #step-tracker li.error::before { border-color: var(--not-met); background: var(--not-met); }
+  @keyframes pulse { 50% { box-shadow: 0 0 0 5px rgba(29, 79, 145, .18); } }
+
+  /* Denial facts, with the deadline set apart */
+  main { max-width: 1320px; margin: 0 auto; padding: 20px 24px 48px; }
+  dl#denial-card { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 10px 24px; margin: 0 0 20px; }
+  dl#denial-card > div { min-width: 0; }
+  dt { font-size: 12px; font-weight: 500; color: var(--ink-soft); }
+  dd { margin: 0; font-weight: 500; overflow-wrap: anywhere; }
+  dl#denial-card .reason { grid-column: 1 / -1; }
+  dl#denial-card .reason dd { font-weight: 400; max-width: 80ch; }
+  dl#denial-card .deadline { grid-column: 1 / -1; display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap;
+                             padding-bottom: 10px; border-bottom: 1px solid var(--rule); }
+  dl#denial-card .deadline dt { font-size: 14px; color: var(--ink); }
+  dl#denial-card .deadline dd { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.1; }
+
+  /* Workspace: letter and criteria on the left, chart rail on the right */
+  .workspace { display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, 400px); gap: 28px; align-items: start; }
+  h2 { font-size: 16px; font-weight: 700; margin: 0 0 10px; }
+  .block + .block { margin-top: 28px; }
+
   table { width: 100%; border-collapse: collapse; font-size: 14px; }
-  th, td { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--border); vertical-align: top; }
-  th { font-size: 12px; color: var(--muted); text-transform: uppercase; }
-  tbody tr { cursor: pointer; }
-  tbody tr:hover { background: var(--accent-soft); }
-  tbody tr.selected { background: var(--accent-soft); box-shadow: inset 3px 0 0 var(--accent); }
-  .badge { display: inline-block; padding: 1px 8px; border-radius: 10px; font-size: 12px; font-weight: 600; white-space: nowrap; }
-  .badge.met { background: var(--ok-bg); color: var(--ok); }
-  .badge.not_met { background: var(--bad-bg); color: var(--bad); }
-  .badge.unclear { background: var(--warn-bg); color: var(--warn); }
-  .rationale { color: var(--muted); font-size: 13px; margin-top: 2px; }
-  #external-refs { margin-top: 12px; font-size: 13px; }
+  th { text-align: left; font-size: 12px; font-weight: 500; color: var(--ink-soft); padding: 0 8px 6px; border-bottom: 1px solid var(--rule); }
+  td { padding: 10px 8px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  #criteria-table tbody tr { cursor: pointer; }
+  #criteria-table tbody tr:hover { background: rgba(255, 255, 255, .55); }
+  #criteria-table tbody tr.selected { background: var(--paper); box-shadow: inset 3px 0 0 var(--ink); }
+  .status { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: 13px; white-space: nowrap;
+            padding: 2px 8px 2px 6px; border-radius: 3px; }
+  .status .glyph { font-size: 12px; width: 1em; text-align: center; }
+  .status.met { color: var(--met); background: var(--met-bg); }
+  .status.not_met { color: var(--not-met); background: var(--not-met-bg); }
+  .status.unclear { color: var(--unclear); background: var(--unclear-bg); }
+  .status.pending { color: var(--ink-soft); }
+  .crit-id { font-weight: 700; margin-right: 4px; }
+  .source { color: var(--ink-soft); font-size: 12px; margin-top: 4px; }
+  .rationale { color: var(--ink-soft); font-size: 13px; margin-top: 4px; }
+  #external-refs { margin-top: 12px; font-size: 13px; color: var(--ink-soft); }
   #external-refs ul { padding-left: 18px; margin: 4px 0 0; }
-  #chart-panel { max-height: 560px; overflow: auto; font-size: 14px; }
-  .line { display: flex; gap: 10px; padding: 3px 6px; border-radius: 4px; }
-  .line .lid { color: var(--muted); font-variant-numeric: tabular-nums; min-width: 34px; font-size: 12px; padding-top: 2px; }
-  .line.hl { background: var(--hl); }
-  #letter { font-family: Georgia, "Times New Roman", serif; font-size: 15px; }
-  .sentence-row { padding: 4px 6px; border-radius: 4px; margin: 2px 0; }
-  .sentence-row:hover { background: #fafbfd; }
-  .sentence { outline: none; border-radius: 3px; }
-  .sentence[contenteditable=true]:focus { background: var(--accent-soft); }
-  .sentence-row.flagged .sentence { text-decoration: line-through; color: var(--bad); }
-  .sentence-row.removed { opacity: .5; }
-  .sentence-row.removed .sentence { text-decoration: line-through; }
-  .flag { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 13px; color: var(--bad);
-          display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 2px; }
-  .flag.resolved { color: var(--muted); }
-  .cites { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; color: var(--muted); margin-left: 6px; }
-  .actions { display: flex; gap: 12px; align-items: center; margin-top: 16px; flex-wrap: wrap; }
-  #review-summary { color: var(--muted); font-size: 14px; margin: 0 0 8px; }
-  .empty { color: var(--muted); font-style: italic; }
-  footer#usage-footer { margin-top: 16px; font-size: 13px; color: var(--muted); }
-  footer table { font-size: 13px; }
+  a { color: var(--action); }
+
+  .cite { display: inline-block; padding: 0 5px; margin: 0 2px; border: 1px solid var(--rule); border-radius: 3px;
+          background: var(--paper); color: var(--ink-soft); font: 600 11px/1.6 var(--sans); vertical-align: 1px; cursor: pointer; }
+  .cite:hover, .cite:focus-visible { background: var(--highlight); color: var(--ink); border-color: #c9d66a; }
+
+  /* The letter: a sheet on the desk */
+  #review-summary { font-size: 14px; color: var(--ink-soft); margin: 0 0 10px; max-width: 80ch; }
+  .sheet { background: var(--paper); border-radius: 2px; box-shadow: 0 1px 2px rgba(24, 48, 63, .12), 0 8px 24px -12px rgba(24, 48, 63, .25);
+           padding: 44px 56px 40px; }
+  #letter { font-family: var(--serif); font-size: 17px; line-height: 1.65; max-width: 68ch; }
+  .sentence-row { position: relative; padding: 3px 0 3px 14px; margin-left: -14px; border-left: 3px solid transparent; }
+  .sentence-row.linked { border-left-color: #b8c74a; background: linear-gradient(90deg, rgba(234, 244, 160, .45), transparent 70%); }
+  .sentence { outline: none; border-radius: 2px; }
+  .sentence[contenteditable=true]:hover { background: rgba(228, 234, 238, .6); }
+  .sentence[contenteditable=true]:focus { background: var(--desk); }
+  .sentence-row.flagged { border-left-color: var(--not-met); }
+  .sentence-row.flagged .sentence { text-decoration: underline wavy var(--not-met); text-decoration-thickness: 1px; text-underline-offset: 4px; }
+  .sentence-row.removed .sentence { text-decoration: line-through; color: var(--ink-soft); }
+  .sentence-row.removed { opacity: .55; }
+  .flag { font: 13px/1.4 var(--sans); color: var(--not-met); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin: 6px 0 4px; }
+  .flag.resolved { color: var(--ink-soft); }
+  .flag button { padding: 2px 10px; font-size: 12px; }
+  .sign-off { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-top: 28px; padding-top: 18px; border-top: 1px solid var(--rule); }
+  #approve-hint { font-size: 13px; color: var(--ink-soft); }
+  .empty { color: var(--ink-soft); font: italic 15px/1.5 var(--serif); }
+
+  /* Chart rail */
+  .rail { position: sticky; top: 16px; }
+  #chart-panel { max-height: calc(100vh - 80px); overflow: auto; background: var(--paper); border: 1px solid var(--rule);
+                 border-radius: 4px; padding: 8px 0; font-size: 14px; }
+  #chart-panel .empty { padding: 4px 16px; }
+  .line { display: flex; gap: 12px; padding: 4px 14px 4px 11px; border-left: 3px solid transparent; transition: background-color .25s; }
+  .line .lid { color: var(--ink-soft); min-width: 30px; font-size: 12px; font-weight: 600; padding-top: 2px; }
+  .line.hl { background: var(--highlight); border-left-color: var(--ink); }
+  .line.hl .lid { color: var(--ink); }
+
+  footer#usage-footer { margin-top: 36px; font-size: 13px; color: var(--ink-soft); max-width: 720px; }
+  footer#usage-footer strong { color: var(--ink); }
+  footer table { font-size: 13px; margin-top: 6px; }
+  footer td { padding: 5px 8px; }
+
+  @media (max-width: 980px) {
+    .workspace { grid-template-columns: 1fr; }
+    .rail { position: static; }
+    #chart-panel { max-height: 420px; }
+  }
+  @media (max-width: 640px) {
+    .masthead-inner, main { padding-left: 16px; padding-right: 16px; }
+    .brand { flex-basis: 100%; }
+    select, input[type=file] { max-width: 100%; }
+    .sheet { padding: 24px 20px; }
+    #letter { font-size: 16px; }
+    #step-tracker li { font-size: 0; }
+    #step-tracker li.running { font-size: 12px; }
+    dl#denial-card .deadline dd { font-size: 22px; }
+    #criteria-table th:nth-child(3), #criteria-table td:nth-child(3) { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  }
 </style>
 </head>
 <body>
 <div id="banner" role="note">Synthetic data only · Drafting aid, not medical advice · Clinician sign-off required before use</div>
-<main>
-  <header>
-    <h1>Appeal-Pilot</h1>
-    <p>Drafts cited prior-authorization appeal letters for clinician review.</p>
-  </header>
 
-  <section class="card" aria-labelledby="input-h">
-    <h2 id="input-h">1. Choose a case</h2>
-    <div class="row">
-      <label>Sample case
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="intake-bar">
+      <div class="brand">
+        <h1>Appeal-Pilot</h1>
+        <p>Cited prior-authorization appeals, ready for clinician review.</p>
+      </div>
+      <div class="case-picker">
+      <label class="field">Sample case
         <select id="sample-select"><option value="">Loading samples…</option></select>
       </label>
       <span class="or">or upload</span>
-      <label>Denial letter (PDF or .txt)<input type="file" id="denial-file" accept=".pdf,.txt"></label>
-      <label>Chart notes (PDF or .txt)<input type="file" id="chart-file" accept=".pdf,.txt"></label>
-      <button id="run-btn" type="button">Run</button>
+      <label class="field">Denial letter (PDF or .txt)<input type="file" id="denial-file" accept=".pdf,.txt"></label>
+      <label class="field">Chart notes (PDF or .txt)<input type="file" id="chart-file" accept=".pdf,.txt"></label>
+      <button id="run-btn" type="button">Draft appeal</button>
+      </div>
     </div>
     <div id="msg" role="status" aria-live="polite"></div>
-  </section>
-
-  <section class="card" aria-labelledby="steps-h">
-    <h2 id="steps-h">2. Progress</h2>
-    <ol id="step-tracker">
-      <li data-step="intake">Intake</li>
-      <li data-step="policy">Policy</li>
-      <li data-step="match">Match</li>
-      <li data-step="draft">Draft</li>
-      <li data-step="review">Review</li>
+    <ol id="step-tracker" aria-label="Progress">
+      <li data-step="intake">Read denial</li>
+      <li data-step="policy">Find policy</li>
+      <li data-step="match">Check chart</li>
+      <li data-step="draft">Write letter</li>
+      <li data-step="review">Fact-check</li>
     </ol>
-  </section>
-
-  <section class="card" aria-labelledby="denial-h">
-    <h2 id="denial-h">3. Denial summary</h2>
-    <dl id="denial-card"><div><dd class="empty">Run a case to extract the denial.</dd></div></dl>
-  </section>
-
-  <div class="grid">
-    <section class="card" aria-labelledby="criteria-h">
-      <h2 id="criteria-h">4. Coverage criteria</h2>
-      <table id="criteria-table">
-        <thead><tr><th>Criterion</th><th>Source</th><th>Status</th><th>Evidence</th></tr></thead>
-        <tbody></tbody>
-      </table>
-      <div id="external-refs" hidden>
-        <strong>External references (not used for matching)</strong>
-        <ul></ul>
-      </div>
-    </section>
-    <section class="card" aria-labelledby="chart-h">
-      <h2 id="chart-h">5. Chart notes</h2>
-      <div id="chart-panel"><p class="empty">Numbered chart lines appear here.</p></div>
-    </section>
   </div>
+</header>
 
-  <section class="card" aria-labelledby="letter-h">
-    <h2 id="letter-h">6. Appeal letter</h2>
-    <p id="review-summary"></p>
-    <div id="letter"><p class="empty">The draft appears here after the review step.</p></div>
-    <div class="actions">
-      <button id="approve-btn" type="button" disabled>Approve</button>
-      <button id="download-btn" type="button" class="secondary" disabled>Download letter</button>
-      <span id="approve-hint" class="rationale"></span>
-    </div>
+<main>
+  <section aria-label="Denial">
+    <dl id="denial-card"></dl>
   </section>
+
+  <div class="workspace">
+    <div>
+      <section class="block" aria-labelledby="criteria-h">
+        <h2 id="criteria-h">Coverage criteria</h2>
+        <table id="criteria-table">
+          <thead><tr><th>Status</th><th>Criterion</th><th>Evidence</th></tr></thead>
+          <tbody></tbody>
+        </table>
+        <div id="external-refs" hidden>
+          <strong>External references (not used for matching)</strong>
+          <ul></ul>
+        </div>
+      </section>
+
+      <section class="block" aria-labelledby="letter-h">
+        <h2 id="letter-h">Appeal letter</h2>
+        <p id="review-summary"></p>
+        <div class="sheet">
+          <div id="letter"></div>
+          <div class="sign-off">
+            <button id="approve-btn" type="button" disabled>Approve letter</button>
+            <button id="download-btn" type="button" class="quiet" disabled>Download letter</button>
+            <span id="approve-hint"></span>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <aside class="rail" aria-labelledby="chart-h">
+      <h2 id="chart-h">Chart notes</h2>
+      <div id="chart-panel"></div>
+    </aside>
+  </div>
 
   <footer id="usage-footer"></footer>
 </main>
@@ -170,6 +251,7 @@
 "use strict";
 const $ = (sel) => document.querySelector(sel);
 const STEP_OF = { intake: "intake", policy: "policy", match: "match", draft: "draft", review: "review", checks: "review" };
+const STATUS = { met: ["✓", "Met"], not_met: ["✕", "Not met"], unclear: ["?", "Unclear"] };
 let current = null;   // the case JSON
 let caseId = null;
 
@@ -205,21 +287,28 @@ async function loadSamples() {
   const sel = $("#sample-select");
   try {
     const samples = await (await api("/api/samples")).json();
-    sel.replaceChildren(el("option", { value: "" , text: "— select a sample —" }),
-      ...samples.map((s) => el("option", { value: s.id, text: `${s.id.replace("case_", "#")} · ${s.title}` })));
+    sel.replaceChildren(el("option", { value: "", text: "Select a sample" }),
+      ...samples.map((s) => el("option", { value: s.id, text: `${s.id.replace("case_", "#")} ${s.title}` })));
   } catch (e) {
     sel.replaceChildren(el("option", { value: "", text: "Samples unavailable" }));
   }
 }
 
+function emptyState() {
+  $("#denial-card").replaceChildren();
+  $("#letter").replaceChildren(el("p", { class: "empty",
+    text: "Choose a sample case or upload a denial letter and chart notes, then select Draft appeal. The letter appears here with every claim linked to the chart." }));
+  $("#chart-panel").replaceChildren(el("p", { class: "empty", text: "Numbered chart lines appear here." }));
+}
+
 function resetView() {
   current = null;
   document.querySelectorAll("#step-tracker li").forEach((li) => (li.className = ""));
-  $("#denial-card").replaceChildren(el("div", {}, el("dd", { class: "empty", text: "Waiting for intake…" })));
+  $("#denial-card").replaceChildren(el("div", {}, el("dd", { class: "empty", text: "Reading the denial…" })));
   $("#criteria-table tbody").replaceChildren();
   $("#external-refs").hidden = true;
   $("#chart-panel").replaceChildren();
-  $("#letter").replaceChildren(el("p", { class: "empty", text: "The draft appears here after the review step." }));
+  $("#letter").replaceChildren(el("p", { class: "empty", text: "The letter appears here after the fact-check." }));
   $("#review-summary").textContent = "";
   $("#usage-footer").replaceChildren();
   updateButtons();
@@ -251,7 +340,7 @@ async function run() {
     caseId = await createCase();
     current = await (await api(`/api/cases/${caseId}`)).json();
     renderChart();
-    setMsg("Running pipeline…");
+    setMsg("Drafting the appeal…");
     await streamRun(caseId);
   } catch (e) {
     setMsg(e.message, true);
@@ -313,11 +402,11 @@ function renderAll() {
 function renderDenial() {
   const d = current?.denial;
   if (!d) return;
-  const fields = [["Payer", d.payer], ["Patient", d.patient_name], ["Member ID", d.member_id], ["Service", d.service],
-    ["CPT / HCPCS", d.cpt_or_hcpcs], ["ICD-10", (d.icd10 || []).join(", ")], ["Denial date", d.denial_date],
-    ["Appeal deadline", d.appeal_deadline], ["Denial reason", d.denial_reason]];
-  $("#denial-card").replaceChildren(...fields.map(([k, v]) =>
-    el("div", { class: k === "Appeal deadline" ? "deadline" : "" }, el("dt", { text: k }), el("dd", { text: v || "—" }))));
+  const fields = [["Appeal deadline", d.appeal_deadline, "deadline"], ["Payer", d.payer], ["Patient", d.patient_name],
+    ["Member ID", d.member_id], ["Service", d.service], ["CPT / HCPCS", d.cpt_or_hcpcs],
+    ["ICD-10", (d.icd10 || []).join(", ")], ["Denial date", d.denial_date], ["Denial reason", d.denial_reason, "reason"]];
+  $("#denial-card").replaceChildren(...fields.map(([k, v, cls]) =>
+    el("div", { class: cls || "" }, el("dt", { text: k }), el("dd", { text: v || "—" }))));
 }
 
 function highlightLines(ids, scroll) {
@@ -330,27 +419,38 @@ function highlightLines(ids, scroll) {
   if (scroll && first) first.scrollIntoView({ block: "nearest", behavior: "smooth" });
 }
 
+// A citation chip: hovering previews the chart line, clicking scrolls to it (the tap path on phones).
+function citeChip(id) {
+  return el("button", { type: "button", class: "cite", text: id, title: `Show ${id} in the chart`,
+    onmouseenter: () => highlightLines([id], false),
+    onclick: (e) => { e.stopPropagation(); highlightLines([id], true); } });
+}
+
 function renderCriteria() {
   const tbody = $("#criteria-table tbody");
   const matches = Object.fromEntries((current?.matches || []).map((m) => [m.criterion_id, m]));
   tbody.replaceChildren(...(current?.criteria || []).map((c) => {
     const m = matches[c.id];
-    const status = m ? m.status : null;
-    const label = { met: "Met", not_met: "Not met", unclear: "Unclear" }[status] || "…";
+    const [glyph, label] = STATUS[m?.status] || ["…", "Checking"];
+    const evidence = m && m.evidence_line_ids.length ? m.evidence_line_ids : [];
     const row = el("tr", { "data-criterion": c.id, tabindex: "0" },
-      el("td", {}, el("strong", { text: `${c.id} ` }), c.text, m ? el("div", { class: "rationale", text: m.rationale }) : null),
-      el("td", { text: `${c.source_doc} §${c.source_section}` }),
-      el("td", {}, el("span", { class: `badge ${status || ""}`, text: label })),
-      el("td", { text: m && m.evidence_line_ids.length ? m.evidence_line_ids.join(", ") : "—" }));
+      el("td", {}, el("span", { class: `status ${m ? m.status : "pending"}` },
+        el("span", { class: "glyph", "aria-hidden": "true", text: glyph }), label)),
+      el("td", {}, el("span", { class: "crit-id", text: c.id }), c.text,
+        m ? el("div", { class: "rationale", text: m.rationale }) : null,
+        el("div", { class: "source", text: `${c.source_doc} §${c.source_section}` })),
+      el("td", {}, ...(evidence.length ? evidence.map(citeChip) : ["—"])));
     const select = () => {
       const was = row.classList.contains("selected");
       tbody.querySelectorAll("tr.selected").forEach((r) => r.classList.remove("selected"));
       if (was) { highlightLines([], false); return; }
       row.classList.add("selected");
-      highlightLines(m ? m.evidence_line_ids : [], true);
+      highlightLines(evidence, true);
     };
     row.addEventListener("click", select);
-    row.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(); } });
+    row.addEventListener("keydown", (e) => {
+      if (e.target === row && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); select(); }
+    });
     return row;
   }));
   // Third-party URLs: only http(s) links are rendered (no javascript: or data: URLs).
@@ -382,7 +482,7 @@ function renderLetter() {
   if (!draft) return;
   const flags = flagsById();
   const editable = current.status === "needs_review";
-  $("#review-summary").textContent = current.review ? `Reviewer: ${current.review.summary}` : "";
+  $("#review-summary").textContent = current.review ? `Fact-check: ${current.review.summary}` : "";
   $("#letter").replaceChildren(...draft.sentences.map((s) => {
     const flag = flags[s.id];
     const resolution = current.flag_resolutions[s.id];
@@ -396,12 +496,11 @@ function renderLetter() {
       catch (e) { setMsg(e.message, true); span.textContent = s.text; }
     });
     span.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); span.blur(); } });
-    const row = el("div", { class: rowClass, "data-sentence": s.id }, span,
-      s.cites.length ? el("span", { class: "cites", text: `[${s.cites.join(", ")}]` }) : null);
-    row.addEventListener("mouseenter", () => highlightLines(s.cites, false));
-    row.addEventListener("mouseleave", () => highlightLines([], false));
+    const row = el("div", { class: rowClass, "data-sentence": s.id }, span, " ", ...s.cites.map(citeChip));
+    row.addEventListener("mouseenter", () => { row.classList.add("linked"); highlightLines(s.cites, false); });
+    row.addEventListener("mouseleave", () => { row.classList.remove("linked"); highlightLines([], false); });
     if (flag) {
-      const resolveBtn = (action, label) => el("button", { type: "button", class: "small secondary", disabled: !editable,
+      const resolveBtn = (action, label) => el("button", { type: "button", class: "quiet", disabled: !editable,
         text: label, onclick: async () => {
           try { await patchLetter({ sentence_id: s.id, flag_action: action }); renderLetter(); updateButtons(); }
           catch (e) { setMsg(e.message, true); }
@@ -437,7 +536,7 @@ async function approve() {
     current = (await (await api(`/api/cases/${caseId}/approve`, { method: "POST" })).json());
     renderLetter();
     updateButtons();
-    setMsg("Letter approved and marked final.");
+    setMsg("Letter approved.");
   } catch (e) { setMsg(e.message, true); }
 }
 
@@ -463,6 +562,7 @@ function renderUsage() {
 $("#run-btn").addEventListener("click", run);
 $("#approve-btn").addEventListener("click", approve);
 $("#download-btn").addEventListener("click", () => { if (caseId) window.location.href = `/api/cases/${caseId}/export?format=txt`; });
+emptyState();
 loadSamples();
 </script>
 </body>
