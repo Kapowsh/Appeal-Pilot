@@ -16,7 +16,7 @@ log = logging.getLogger(__name__)
 T = TypeVar("T", bound=BaseModel)
 
 MAX_ATTEMPTS = 4
-TIMEOUT_S = 60
+TIMEOUT_S = 120
 _THINK = re.compile(r"<think>.*?</think>", re.DOTALL)
 _FENCE = re.compile(r"```(?:json)?\s*(.*?)```", re.DOTALL)
 

@@ -32,7 +32,7 @@ def classify(ids: list[str]) -> dict:
 def _json_ok(client, model, response_format) -> bool:
     try:
         resp = client.chat.completions.create(model=model, messages=_PROBE_MESSAGES, response_format=response_format,
-                                              max_tokens=256, temperature=0.1)
+                                              max_tokens=2048, temperature=0.1)
         return json.loads(_clean(resp.choices[0].message.content)).get("ok") is True
     except Exception:
         return False
@@ -46,7 +46,7 @@ def probe(client, model: str) -> dict[str, bool]:
     }
     try:
         resp = client.chat.completions.create(
-            model=model, max_tokens=256, temperature=0.1, tools=[_PROBE_TOOL], tool_choice="auto",
+            model=model, max_tokens=2048, temperature=0.1, tools=[_PROBE_TOOL], tool_choice="auto",
             messages=[{"role": "user", "content": "Look up coverage policy AH-RAD-012."}])
         result["tools"] = bool(resp.choices[0].message.tool_calls)
     except Exception:
@@ -60,7 +60,7 @@ def recommend(nemotron: list[str], probes: dict[str, dict], embedding: list[str]
     def first(words: list[str]) -> str:
         return next((m for w in words for m in eligible if w in m.lower()), "")
 
-    fast = first(["nano", "lightning"]) or (eligible[0] if eligible else "")
+    fast = first(["lightning", "nano"]) or (eligible[0] if eligible else "")
     reason = first(["super", "ultra"]) or fast
     embed = next((e for e in embedding if "nemotron" in e.lower() or "nv" in e.lower()), embedding[0] if embedding else "")
     return {"MODEL_FAST": fast, "MODEL_REASON": reason, "MODEL_EMBED": embed}

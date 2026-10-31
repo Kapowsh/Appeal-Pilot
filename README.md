@@ -50,7 +50,7 @@ flowchart TD
 | Requirement | How Appeal-Pilot meets it |
 | --- | --- |
 | **Runs on Nebius** | Every LLM call goes through **Nebius Token Factory** (`https://api.tokenfactory.nebius.com/v1/`). No other model provider is used. |
-| **Uses NVIDIA open models** | All five agents run on **NVIDIA Nemotron**:<br>• `nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B` for fast extraction<br>• `nvidia/nemotron-3-super-120b-a12b` for matching, writing and review |
+| **Uses NVIDIA open models** | All five agents run on **NVIDIA Nemotron**:<br>• `nvidia/Nemotron-3_5-Lightning` for fast extraction<br>• `nvidia/Nemotron-3.5-Super-VL` for matching, writing and review |
 | **Best Apps and Agents** | A multi-agent pipeline with structured outputs, a separate fact-checking agent, and a human approval step. |
 
 **Data sources:** The 15 coverage policies are adapted from real public policies (CMS, Aetna, BCBS and others; each file cites its source). The sample denials follow real denial patterns from California's public independent medical review decisions.

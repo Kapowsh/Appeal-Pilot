@@ -18,7 +18,7 @@ def run(llm, settings, draft: AppealDraft, chart_lines: list[ChartLine], criteri
     sentences = "\n".join(f"{s.id} (cites: {', '.join(s.cites) or 'none'}): {s.text}" for s in draft.sentences)
     user = (f"Letter sentences:\n{sentences}\n\nChart lines:\n{format_lines(chart_lines)}\n\n"
             f"Criteria:\n{format_criteria(criteria)}")
-    review = llm.chat_json(settings.model_reason, SYSTEM, user, Review, step="review", max_tokens=2048)
+    review = llm.chat_json(settings.model_reason, SYSTEM, user, Review, step="review", max_tokens=32768)
     ids = {s.id for s in draft.sentences}
     flags = [ReviewFlag(sentence_id=normalize_id(f.sentence_id), issue=f.issue, action=f.action)
              for f in review.flags if normalize_id(f.sentence_id) in ids]

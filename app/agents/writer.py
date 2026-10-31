@@ -24,7 +24,7 @@ def run(llm, settings, denial: Denial, criteria: list[Criterion], matches: list[
         for c in criteria if c.id in status)
     user = (f"Denial:\n{denial.model_dump_json(indent=1)}\n\nCriteria and match results:\n{crit_text}\n\n"
             f"Chart lines:\n{format_lines(chart_lines)}")
-    draft = llm.chat_json(settings.model_reason, SYSTEM, user, AppealDraft, step="draft", max_tokens=4096)
+    draft = llm.chat_json(settings.model_reason, SYSTEM, user, AppealDraft, step="draft", max_tokens=16384)
     return AppealDraft(sentences=[
         LetterSentence(id=f"S{i}", text=s.text.strip(),
                        cites=list(dict.fromkeys(normalize_id(c) for c in s.cites if c.strip())))

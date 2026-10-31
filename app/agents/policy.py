@@ -25,7 +25,7 @@ def run(llm, settings, index, denial: Denial, tavily=None, denial_text: str = ""
     excerpts = "\n\n".join(f"[source_doc={c.source_doc} | {c.section}]\n{c.text}" for c in chunks)
     user = (f"Denied service: {denial.service} (code {denial.cpt_or_hcpcs or 'n/a'})\n"
             f"Payer: {denial.payer}\nDenial reason: {denial.denial_reason}\n\nPolicy excerpts:\n\n{excerpts}")
-    parsed = llm.chat_json(settings.model_fast, SYSTEM, user, CriteriaList, step="policy", max_tokens=2048)
+    parsed = llm.chat_json(settings.model_fast, SYSTEM, user, CriteriaList, step="policy", max_tokens=12288)
     default_doc = chunks[0].source_doc
     retrieved = {c.source_doc for c in chunks}
     # Only criteria from a retrieved policy, and from a single policy: never argue from an invented or mixed source.

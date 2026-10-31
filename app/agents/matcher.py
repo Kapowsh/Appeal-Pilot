@@ -13,7 +13,7 @@ rationale: one or two sentences explaining the decision."""
 
 def run(llm, settings, criteria: list[Criterion], chart_lines: list[ChartLine]) -> list[CriterionMatch]:
     user = f"Criteria:\n{format_criteria(criteria)}\n\nChart lines:\n{format_lines(chart_lines)}"
-    parsed = llm.chat_json(settings.model_reason, SYSTEM, user, MatchList, step="match", max_tokens=3072)
+    parsed = llm.chat_json(settings.model_reason, SYSTEM, user, MatchList, step="match", max_tokens=8192)
     valid_lines = {l.id for l in chart_lines}
     by_id: dict[str, CriterionMatch] = {}
     for m in parsed.matches:

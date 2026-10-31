@@ -12,4 +12,4 @@ Copy values as written in the letter. Use null for any field the letter does not
 
 def run(llm, settings, denial_text: str) -> Denial:
     return llm.chat_json(settings.model_fast, SYSTEM, f"Denial letter:\n\n{denial_text}", Denial,
-                         step="intake", max_tokens=1024)
+                         step="intake", max_tokens=6144)
